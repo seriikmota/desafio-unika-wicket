@@ -1,112 +1,60 @@
 package dev.erikmota.desafiounikamain.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="monitorador")
-public class Monitorador {
-    //Atributos
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Monitorador implements Serializable {
     private Long id;
-
-    @Column(name = "tipo")
-    @Enumerated(EnumType.STRING)
-    private TipoPessoa tipoPessoa;
-    @CPF
+    @JsonProperty("tipoPessoa")
+    private String tipoPessoa;
     private String cpf;
-    @CNPJ
     private String cnpj;
     private String nome;
-    @Column(name = "razao_social")
+    @JsonProperty("razaoSocial")
     private String razaoSocial;
-    @NotBlank
     private String email;
-    @NotBlank
     private String rg;
-    @NotNull
-    @Column(name = "inscricao_social")
+    @JsonProperty("inscricaoSocial")
     private Long inscricaoSocial;
-    @NotBlank
-    @Column(name = "data_nascimento")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonProperty("dataNascimento")
     private String dataNascimento;
-    @NotBlank
     private String ativo;
-    @OneToMany(mappedBy = "monitorador")
-    private List<Endereco> enderecos = new ArrayList<>();
+    private List<Endereco> enderecos;
 
-    public Monitorador(){
-
+    public Long getId() {
+        return id;
     }
 
-    public Monitorador(TipoPessoa tipoPessoa, String cpf, String cnpj, String nome, String razaoSocial, String email, String rg, Long inscricaoSocial, String dataNascimento, String ativo) {
-        this.tipoPessoa = tipoPessoa;
-        this.cpf = cpf;
-        this.cnpj = cnpj;
-        this.nome = nome;
-        this.razaoSocial = razaoSocial;
-        this.email = email;
-        this.rg = rg;
-        this.inscricaoSocial = inscricaoSocial;
-        this.dataNascimento = dataNascimento;
-        this.ativo = ativo;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void editar(Monitorador m) {
-        this.tipoPessoa = m.tipoPessoa;
-        this.cpf = m.cpf;
-        this.cnpj = m.cnpj;
-        this.nome = m.nome;
-        this.razaoSocial = m.razaoSocial;
-        this.email = m.email;
-        this.rg = m.rg;
-        this.inscricaoSocial = m.inscricaoSocial;
-        this.dataNascimento = m.dataNascimento;
-        this.ativo = m.ativo;
-        this.enderecos = m.enderecos;
-    }
-
-    public TipoPessoa getTipoPessoa() {
+    public String getTipoPessoa() {
         return tipoPessoa;
     }
 
-    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+    public void setTipoPessoa(String tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
     }
 
     public String getCpf() {
-        if (cpf == null)
-            return null;
-        return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+        return cpf;
     }
 
     public void setCpf(String cpf) {
-        if (cpf != null)
-            this.cpf = cpf.replaceAll("[^0-9]", "");
+        this.cpf = cpf;
     }
 
     public String getCnpj() {
-        if (cnpj == null)
-            return null;
-        return cnpj.substring(0, 2) + "." + cnpj.substring(2, 5) + "." +
-                cnpj.substring(5, 8) + "/" + cnpj.substring(8, 12) + "-" + cnpj.substring(12);
+        return cnpj;
     }
 
     public void setCnpj(String cnpj) {
-        if (cnpj != null)
-            this.cnpj = cnpj.replaceAll("[^0-9]", "");
+        this.cnpj = cnpj;
     }
 
     public String getNome() {
@@ -114,11 +62,7 @@ public class Monitorador {
     }
 
     public void setNome(String nome) {
-        if (nome == null || nome.isEmpty())
-            this.nome = null;
-        else
-            this.nome = nome;
-
+        this.nome = nome;
     }
 
     public String getRazaoSocial() {
@@ -126,8 +70,7 @@ public class Monitorador {
     }
 
     public void setRazaoSocial(String razaoSocial) {
-        if (razaoSocial == null || razaoSocial.isEmpty()) this.razaoSocial = null;
-        else this.razaoSocial = razaoSocial;
+        this.razaoSocial = razaoSocial;
     }
 
     public String getEmail() {
@@ -178,8 +121,21 @@ public class Monitorador {
         this.enderecos = enderecos;
     }
 
-    public Long getId() {
-        return id;
+    public String toString() {
+        return "Monitorador{" +
+                "id=" + id +
+                ", tipoPessoa='" + tipoPessoa + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                ", nome='" + nome + '\'' +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", email='" + email + '\'' +
+                ", rg='" + rg + '\'' +
+                ", inscricaoSocial=" + inscricaoSocial +
+                ", dataNascimento='" + dataNascimento + '\'' +
+                ", ativo='" + ativo + '\'' +
+                ", \nenderecos=" + enderecos +
+                '}' + "\n";
     }
 
 }

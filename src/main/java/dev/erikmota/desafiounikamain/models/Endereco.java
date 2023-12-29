@@ -1,19 +1,11 @@
 package dev.erikmota.desafiounikamain.models;
 
-import com.fasterxml.jackson.annotation.*;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-@Entity
-@Table(name="endereco")
-public class Endereco{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Endereco implements Serializable {
     private Long id;
-    @NotBlank
     private String endereco;
     private String numero;
     private String cep;
@@ -22,41 +14,16 @@ public class Endereco{
     private String cidade;
     private String estado;
     private String principal;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "monitorador_id")
-    @JsonBackReference
+    @JsonProperty("monitorador_id")
     private Monitorador monitorador;
 
-    public Endereco() {
-
-    }
-
-    public Endereco(String endereco, String numero, String cep, String bairro, String telefone, String cidade, String estado, String principal, Monitorador monitorador) {
-        this.endereco = endereco;
-        this.numero = numero;
-        this.cep = cep;
-        this.bairro = bairro;
-        this.telefone = telefone;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.principal = principal;
-        this.monitorador = monitorador;
-    }
-
-    public void editar(Endereco e) {
-        this.endereco = e.endereco;
-        this.numero = e.numero;
-        this.cep = e.cep;
-        this.bairro = e.bairro;
-        this.telefone = e.telefone;
-        this.cidade = e.cidade;
-        this.estado = e.estado;
-        this.principal = e.principal;
-        this.monitorador = e.monitorador;
-    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEndereco() {
@@ -131,4 +98,25 @@ public class Endereco{
         this.monitorador = monitorador;
     }
 
+    public String toString() {
+        return "Endereco{" +
+                "id=" + id +
+                ", endereco='" + endereco + '\'' +
+                ", numero='" + numero + '\'' +
+                ", cep='" + cep + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", estado='" + estado + '\'' +
+                ", principal='" + principal + '\'' +
+                ", monitorador=" + monitorador.getNome() +
+                '}';
+    }
+
+    public String getNomeOrRazao() {
+        if (monitorador.getTipoPessoa().contains("FISICA"))
+            return monitorador.getNome();
+        else
+            return monitorador.getRazaoSocial();
+    }
 }
