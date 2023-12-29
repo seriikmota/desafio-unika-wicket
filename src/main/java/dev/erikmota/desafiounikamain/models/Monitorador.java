@@ -9,7 +9,7 @@ import java.util.List;
 public class Monitorador implements Serializable {
     private Long id;
     @JsonProperty("tipoPessoa")
-    private String tipoPessoa;
+    private TipoPessoa tipoPessoa;
     private String cpf;
     private String cnpj;
     private String nome;
@@ -17,11 +17,10 @@ public class Monitorador implements Serializable {
     private String razaoSocial;
     private String email;
     private String rg;
-    @JsonProperty("inscricaoSocial")
-    private Long inscricaoSocial;
+    @JsonProperty("inscricaoEstadual")
+    private Long inscricaoEstadual;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonProperty("dataNascimento")
-    private String dataNascimento;
+    private String data;
     private String ativo;
     private List<Endereco> enderecos;
 
@@ -33,11 +32,11 @@ public class Monitorador implements Serializable {
         this.id = id;
     }
 
-    public String getTipoPessoa() {
+    public TipoPessoa getTipoPessoa() {
         return tipoPessoa;
     }
 
-    public void setTipoPessoa(String tipoPessoa) {
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
     }
 
@@ -89,20 +88,20 @@ public class Monitorador implements Serializable {
         this.rg = rg;
     }
 
-    public Long getInscricaoSocial() {
-        return inscricaoSocial;
+    public Long getInscricaoEstadual() {
+        return inscricaoEstadual;
     }
 
-    public void setInscricaoSocial(Long inscricaoSocial) {
-        this.inscricaoSocial = inscricaoSocial;
+    public void setInscricaoEstadual(Long inscricaoEstadual) {
+        this.inscricaoEstadual = inscricaoEstadual;
     }
 
-    public String getDataNascimento() {
-        return dataNascimento;
+    public String getData() {
+        return data;
     }
 
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getAtivo() {
@@ -121,21 +120,21 @@ public class Monitorador implements Serializable {
         this.enderecos = enderecos;
     }
 
-    public String toString() {
+    /*public String toString() {
         return "Monitorador{" +
                 "id=" + id +
-                ", tipoPessoa='" + tipoPessoa + '\'' +
+                ", tipoPessoa=" + tipoPessoa +
                 ", cpf='" + cpf + '\'' +
                 ", cnpj='" + cnpj + '\'' +
                 ", nome='" + nome + '\'' +
                 ", razaoSocial='" + razaoSocial + '\'' +
                 ", email='" + email + '\'' +
                 ", rg='" + rg + '\'' +
-                ", inscricaoSocial=" + inscricaoSocial +
-                ", dataNascimento='" + dataNascimento + '\'' +
+                ", inscricaoEstadual=" + inscricaoEstadual +
+                ", dataNascimento='" + data + '\'' +
                 ", ativo='" + ativo + '\'' +
                 ", \nenderecos=" + enderecos +
                 '}' + "\n";
-    }
+    }*/
 
 }

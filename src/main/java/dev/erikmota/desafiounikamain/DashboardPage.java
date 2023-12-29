@@ -1,17 +1,14 @@
 package dev.erikmota.desafiounikamain;
 
-import dev.erikmota.desafiounikamain.models.Endereco;
-import dev.erikmota.desafiounikamain.models.Monitorador;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 
 public class DashboardPage extends BasePage {
     public DashboardPage() {
-        monitoradorList = atualizarLista("http://localhost:8081/monitorador", Monitorador.class);
-        enderecoList = atualizarLista("http://localhost:8081/endereco", Endereco.class); MapEndereco();
+        atualizarListas();
 
         add(new Label("quantMonitorador", monitoradorList.size()));
-        add(new Label("quantEndereco", enderecoList.size()));
+        add(new Label("quantEndereco", monitoradorList.size()));
 
         add(new Link<Void>("hrefMonitorador") {
             @Override

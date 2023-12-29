@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain;
+package dev.erikmota.desafiounikamain.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,19 +21,19 @@ public class ClientHttpConfiguration {
             throw new RuntimeException(e);
         }
     }
-    /*
-    public HttpResponse<String> requestPost(String uri, Object object) throws IOException, InterruptedException {
+
+    public HttpResponse<String> requestPost(String uri, String json) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
                 .header("Content-Type", "application/json")
-                .method("POST", HttpRequest.BodyPublishers.ofString())
+                .method("POST", HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
-
+    /*
     public HttpResponse<String> requestDelete(String uri, Object object) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 

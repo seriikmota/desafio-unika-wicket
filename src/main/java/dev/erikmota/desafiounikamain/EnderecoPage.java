@@ -1,7 +1,6 @@
 package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.models.Endereco;
-import dev.erikmota.desafiounikamain.models.Monitorador;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -9,8 +8,8 @@ import org.apache.wicket.markup.html.list.ListView;
 
 public class EnderecoPage extends BasePage {
     public EnderecoPage() {
-        monitoradorList = atualizarLista("http://localhost:8081/monitorador", Monitorador.class);
-        enderecoList = atualizarLista("http://localhost:8081/endereco", Endereco.class); MapEndereco();
+        atualizarListas();
+
         try{
             add(new ListView<>("enderecoList", enderecoList) {
                 @Override

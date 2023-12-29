@@ -17,71 +17,60 @@
   <h2 class="mb-4" style="text-align: center;">Cadastrar novo monitorador</h2>
 
   <form class="row m-2" wicket:id="formMonitorador">
+
     <div class="col-12 mb-3">
       <label for="inputTipoPessoa" class="form-label mb-0 form-label-sm">Tipo de Pessoa</label>
-      <select id="inputTipoPessoa" class="form-select form-select-sm">
-        <option selected>Escolha</option>
-        <option>Fisica</option>
-        <option>Juridica</option>
+      <select id="inputTipoPessoa" class="form-select form-select-sm" wicket:id="tipoPessoa">
       </select>
     </div>
 
-    <div class="col-6 mb-3">
-      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm">Cnpj</label>
-      <input type="text" class="form-control form-control-sm" id="inputCnpj" placeholder="00.000.000/0001-00">
-    </div>
-    <!--
-    <div class="col-6 mb-3">
+    <div class="col-4 mb-3">
       <label for="inputRazaoSocial" class="form-label mb-0 form-label-sm">Razao Social</label>
       <input type="text" class="form-control form-control-sm" id="inputRazaoSocial" placeholder="razao social">
     </div>
-    -->
-    <div class="col-6 mb-3">
-      <label for="inputCpf" class="form-label mb-0 form-label-sm">Cpf</label>
-      <input type="text" class="form-control form-control-sm" id="inputCpf" placeholder="000.000.000-00">
+
+    <div class="col-4 mb-3">
+      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm">Cnpj</label>
+      <input type="text" class="form-control form-control-sm" id="inputCnpj" placeholder="00.000.000/0001-00" wicket:id="cnpj">
     </div>
 
-    <div class="col-6 mb-3">
-      <label for="inputNome" class="form-label mb-0 form-label-sm">Nome</label>
-      <input type="text" class="form-control form-control-sm" id="inputNome" placeholder="nome">
+    <div class="col-4 mb-3">
+      <label for="inputIE" class="form-label mb-0 form-label-sm">Inscricao Estadual</label>
+      <input type="text" class="form-control form-control-sm" id="inputIE" placeholder="inscricao estadual">
     </div>
-    <!--
+
+    <div class="col-4 mb-3">
+      <label for="inputNome" class="form-label mb-0 form-label-sm">Nome</label>
+      <input type="text" class="form-control form-control-sm" id="inputNome" placeholder="nome" wicket:id="nome">
+    </div>
+
+    <div class="col-4 mb-3">
+      <label for="inputCpf" class="form-label mb-0 form-label-sm">Cpf</label>
+      <input type="text" class="form-control form-control-sm" id="inputCpf" placeholder="000.000.000-00" wicket:id="cpf">
+    </div>
+
     <div class="col-4 mb-3">
       <label for="inputRg" class="form-label mb-0 form-label-sm">Rg</label>
       <input type="text" class="form-control form-control-sm" id="inputRg" placeholder="rg">
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputIS" class="form-label mb-0 form-label-sm">Inscricao Social</label>
-      <input type="text" class="form-control form-control-sm" id="inputIS" placeholder="inscricao social">
+    <div class="col-6 mb-3">
+      <label for="inputData" class="form-label mb-0 form-label-sm">Data de Nascimento/Abertura</label>
+      <input type="date" class="form-control form-control-sm" id="inputData" placeholder="dd/MM/yyyy">
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputDataNas" class="form-label mb-0 form-label-sm">Data de Nascimento</label>
-      <input type="date" class="form-control form-control-sm" id="inputDataNas" placeholder="dd/MM/yyyy">
-    </div>
-
-    <div class="col-8 mb-3">
+    <div class="col-6 mb-3">
       <label for="inputEmail" class="form-label mb-0 form-label-sm">Email</label>
       <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="email">
     </div>
 
-    <div class="col-4 mb-3">
-      <label class="form-label mb-0 form-label-sm">Ativo</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="inputAtivo" id="ativoSim" checked>
-        <label class="form-check-label" for="ativoSim">
-          Sim
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="inputAtivo" id="ativoNao">
-        <label class="form-check-label" for="ativoNao">
-          Nao
-        </label>
-      </div>
+    <div class="col-12 mb-3">
+      <label class="form-label mb-0 form-label-sm mb-1">Ativo</label>
+            <div wicket:id="ativo" class="pe-3">
+              <input class="form-check-input" type="radio">
+            </div>
     </div>
-    -->
+
     <div class="col text-end mt-2">
       <button type="button" class="btn btn-secondary">Fechar</button>
       <button type="submit" value="submit" class="btn btn-primary">Cadastrar</button>

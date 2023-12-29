@@ -1,42 +1,28 @@
 package dev.erikmota.desafiounikamain;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
+import dev.erikmota.desafiounikamain.service.ActionsRequest;
+
 import org.apache.wicket.markup.html.WebPage;
 
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BasePage extends WebPage {
-
     public List<Endereco> enderecoList;
     public List<Monitorador> monitoradorList;
-    public ObjectMapper mapper = new ObjectMapper();
-    public static ClientHttpConfiguration client = new ClientHttpConfiguration();
 
-    public <T> List<T> atualizarLista(String endereco, Class<T> classe) {
-        List<T> lista = new ArrayList<>();
-        try {
-            HttpResponse<String> response = client.requestGet(endereco);
-            String json = response.body();
-            lista = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(ArrayList.class, classe));
+    public ActionsRequest request = new ActionsRequest();
 
-        } catch (Exception e) {
-            System.out.println("Erro ao atualizar lista");
-        }
-
-        return lista;
-    }
-
-    public void MapEndereco(){
+    public void atualizarListas(){
+        monitoradorList = request.atualizar("http://localhost:8081/monitorador", Monitorador.class);
+        /*enderecoList = request.atualizar("http://localhost:8081/endereco", Endereco.class);
         enderecoList.forEach(endereco ->
                 monitoradorList.stream()
                         .filter(monitorador -> monitorador.getEnderecos().stream()
                                 .anyMatch(enderecoMonitorador -> enderecoMonitorador.getCep().equals(endereco.getCep())))
                         .findFirst()
                         .ifPresent(endereco::setMonitorador)
-        );
+        );*/
     }
 }
