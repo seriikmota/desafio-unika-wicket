@@ -20,51 +20,51 @@
 
     <div class="col-12 mb-3">
       <label for="inputTipoPessoa" class="form-label mb-0 form-label-sm">Tipo de Pessoa</label>
-      <select id="inputTipoPessoa" class="form-select form-select-sm" wicket:id="tipoPessoa">
+      <select id="inputTipoPessoa" class="form-select form-select-sm" wicket:id="tipoPessoa" required>
       </select>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputRazaoSocial" class="form-label mb-0 form-label-sm">Razao Social</label>
-      <input type="text" class="form-control form-control-sm" id="inputRazaoSocial" placeholder="razao social">
+    <div class="col-4">
+      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm" wicket:id="cnpjLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputCnpj" placeholder="00.000.000/0001-00" wicket:id="cnpj" required>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm">Cnpj</label>
-      <input type="text" class="form-control form-control-sm" id="inputCnpj" placeholder="00.000.000/0001-00" wicket:id="cnpj">
+    <div class="col-4">
+      <label for="inputRazaoSocial" class="form-label mb-0 form-label-sm" wicket:id="razaoLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputRazaoSocial" placeholder="razao social" wicket:id="razaoSocial" required>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputIE" class="form-label mb-0 form-label-sm">Inscricao Estadual</label>
-      <input type="text" class="form-control form-control-sm" id="inputIE" placeholder="inscricao estadual">
+    <div class="col-4">
+      <label for="inputIE" class="form-label mb-0 form-label-sm" wicket:id="inscricaoLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputIE" placeholder="inscricao estadual" wicket:id="inscricaoEstadual" required>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputNome" class="form-label mb-0 form-label-sm">Nome</label>
-      <input type="text" class="form-control form-control-sm" id="inputNome" placeholder="nome" wicket:id="nome">
+    <div class="col-4">
+      <label for="inputNome" class="form-label mb-0 form-label-sm" wicket:id="nomeLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputNome" placeholder="nome" wicket:id="nome" required>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputCpf" class="form-label mb-0 form-label-sm">Cpf</label>
-      <input type="text" class="form-control form-control-sm" id="inputCpf" placeholder="000.000.000-00" wicket:id="cpf">
+    <div class="col-4">
+      <label for="inputCpf" class="form-label mb-0 form-label-sm" wicket:id="cpfLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputCpf" placeholder="000.000.000-00" wicket:id="cpf" required>
     </div>
 
-    <div class="col-4 mb-3">
-      <label for="inputRg" class="form-label mb-0 form-label-sm">Rg</label>
-      <input type="text" class="form-control form-control-sm" id="inputRg" placeholder="rg">
+    <div class="col-4">
+      <label for="inputRg" class="form-label mb-0 form-label-sm" wicket:id="rgLabel">asd</label>
+      <input type="text" class="form-control form-control-sm" id="inputRg" placeholder="rg" wicket:id="rg" required>
     </div>
 
-    <div class="col-6 mb-3">
-      <label for="inputData" class="form-label mb-0 form-label-sm">Data de Nascimento/Abertura</label>
-      <input type="date" class="form-control form-control-sm" id="inputData" placeholder="dd/MM/yyyy">
+    <div class="col-6 mt-3 mb-3">
+      <label for="inputData" class="form-label mb-0 form-label-sm" wicket:id="dataLabel">asd</label>
+      <input type="date" class="form-control form-control-sm" id="inputData" placeholder="dd/MM/yyyy" wicket:id="data" required>
     </div>
 
-    <div class="col-6 mb-3">
+    <div class="col-6 mt-3 mb-3">
       <label for="inputEmail" class="form-label mb-0 form-label-sm">Email</label>
-      <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="email">
+      <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="email" wicket:id="email" required>
     </div>
 
-    <div class="col-12 mb-3">
+    <div class="col-2 mb-3">
       <label class="form-label mb-0 form-label-sm mb-1">Ativo</label>
             <div wicket:id="ativo" class="pe-3">
               <input class="form-check-input" type="radio">

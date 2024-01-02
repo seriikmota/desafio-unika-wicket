@@ -1,14 +1,16 @@
 package dev.erikmota.desafiounikamain.service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.Serializable;
 import java.net.http.HttpResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActionsRequest {
     public static ClientHttpConfiguration client = new ClientHttpConfiguration();
-    public ObjectMapper mapper = new ObjectMapper();
+    public ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
     public <T> List<T> atualizar(String endereco, Class<T> classe) {
         List<T> lista = new ArrayList<>();
@@ -26,8 +28,8 @@ public class ActionsRequest {
     public void cadastrar(String endereco, Object object) {
         try {
             System.out.println(mapper.writeValueAsString(object));
-            /*HttpResponse<String> response = client.requestPost(endereco, mapper.writeValueAsString(object));
-            System.out.println("Code: " + response.statusCode() + "Body: " + response.body());*/
+            HttpResponse<String> response = client.requestPost(endereco, mapper.writeValueAsString(object));
+            System.out.println("Code: " + response.statusCode() + "Body: " + response.body());
 
         } catch (Exception e) {
             System.out.println("Erro ao realizar o cadastro");
@@ -42,9 +44,9 @@ public class ActionsRequest {
         } catch (Exception e) {
             System.out.println("Erro ao editar");
         }
-    }*/
+    }
 
-    /*public void excluir(String endereco) {
+    public void excluir(String endereco) {
         try {
             HttpResponse<String> response = client.requestDelete(endereco);
             System.out.println("Code: " + response.statusCode() + "Body: " + response.body());

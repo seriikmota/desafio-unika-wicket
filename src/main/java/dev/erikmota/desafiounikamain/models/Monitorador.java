@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Monitorador implements Serializable {
@@ -18,10 +19,9 @@ public class Monitorador implements Serializable {
     private String email;
     private String rg;
     @JsonProperty("inscricaoEstadual")
-    private Long inscricaoEstadual;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String inscricaoEstadual;
     private String data;
-    private String ativo;
+    private Boolean ativo;
     private List<Endereco> enderecos;
 
     public Long getId() {
@@ -88,11 +88,11 @@ public class Monitorador implements Serializable {
         this.rg = rg;
     }
 
-    public Long getInscricaoEstadual() {
+    public String getInscricaoEstadual() {
         return inscricaoEstadual;
     }
 
-    public void setInscricaoEstadual(Long inscricaoEstadual) {
+    public void setInscricaoEstadual(String inscricaoEstadual) {
         this.inscricaoEstadual = inscricaoEstadual;
     }
 
@@ -104,11 +104,11 @@ public class Monitorador implements Serializable {
         this.data = data;
     }
 
-    public String getAtivo() {
+    public Boolean getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(String ativo) {
+    public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
 
@@ -120,7 +120,8 @@ public class Monitorador implements Serializable {
         this.enderecos = enderecos;
     }
 
-    /*public String toString() {
+    @Override
+    public String toString() {
         return "Monitorador{" +
                 "id=" + id +
                 ", tipoPessoa=" + tipoPessoa +
@@ -130,11 +131,10 @@ public class Monitorador implements Serializable {
                 ", razaoSocial='" + razaoSocial + '\'' +
                 ", email='" + email + '\'' +
                 ", rg='" + rg + '\'' +
-                ", inscricaoEstadual=" + inscricaoEstadual +
-                ", dataNascimento='" + data + '\'' +
-                ", ativo='" + ativo + '\'' +
-                ", \nenderecos=" + enderecos +
-                '}' + "\n";
-    }*/
-
+                ", inscricaoEstadual='" + inscricaoEstadual + '\'' +
+                ", data='" + data + '\'' +
+                ", ativo=" + ativo +
+                ", enderecos=" + enderecos +
+                '}';
+    }
 }

@@ -16,7 +16,6 @@ public class MonitoradorPage extends BasePage {
         add(modal);
 
         atualizarListas();
-
         try {
             add(new ListView<>("monitoradorList", monitoradorList) {
                 @Override
@@ -33,7 +32,7 @@ public class MonitoradorPage extends BasePage {
                     item.add(new Label("mEmail", monitorador.getEmail()));
                     item.add(new Label("mData", monitorador.getData()));
                     item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
-                    item.add(new Label("mAtivo", monitorador.getAtivo()));
+                    item.add(new Label("mAtivo", monitorador.getAtivo().equals(true) ? "Sim" : "Não"));
                 }
             });
         } catch (NullPointerException e){
@@ -61,7 +60,5 @@ public class MonitoradorPage extends BasePage {
                 modal.show(target);
             }
         });
-
-
     }
 }

@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.list.ListView;
 
 public class EnderecoPage extends BasePage {
     public EnderecoPage() {
-        atualizarListas();
+        //atualizarListas();
 
         try{
             add(new ListView<>("enderecoList", enderecoList) {
