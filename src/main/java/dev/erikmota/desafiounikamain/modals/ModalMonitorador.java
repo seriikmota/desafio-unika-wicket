@@ -1,12 +1,12 @@
 package dev.erikmota.desafiounikamain.modals;
 
+import dev.erikmota.desafiounikamain.MonitoradorPage;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -14,19 +14,20 @@ import org.apache.wicket.model.CompoundPropertyModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-public class CadModBackup extends Panel {
+public class ModalMonitorador extends Panel {
     List<Component> componentes = new ArrayList<>();
     TextField<String> cnpj, razao, inscricao, cpf, nome, rg;
     EmailTextField email;
-    DateTextField data;
+    TextField<Date> data;
     DropDownChoice<TipoPessoa> tipo;
     RadioChoice<Boolean> ativo;
     Label cnpjLabel, razaoLabel, inscricaoLabel, cpfLabel, nomeLabel, rgLabel, dataLabel;
     private static final ActionsRequest request = new ActionsRequest();
 
-    public CadModBackup(String id){
+    public ModalMonitorador(String id){
         super(id);
         Monitorador monitorador = new Monitorador();
 
@@ -49,9 +50,9 @@ public class CadModBackup extends Panel {
         Form<Monitorador> form = new Form<>("formMonitorador", new CompoundPropertyModel<>(monitorador)){
             @Override
             protected void onSubmit() {
-                System.out.println("submit");
                 System.out.println(monitorador);
-                //request.cadastrar("http://localhost:8081/monitorador", monitorador);
+                request.cadastrar("http://localhost:8081/monitorador", monitorador);
+                setResponsePage(MonitoradorPage.class);
             }
         };
         componentes.forEach(form::add);
@@ -65,7 +66,7 @@ public class CadModBackup extends Panel {
         cpf = new TextField<>("cpf");
         nome = new TextField<>("nome");
         rg = new TextField<>("rg");
-        data = new DateTextField("data");
+        data = new TextField<>("data");
         email = new EmailTextField("email");
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false)).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
         tipo = new DropDownChoice<>("tipoPessoa", Arrays.asList(TipoPessoa.values()));
@@ -79,7 +80,6 @@ public class CadModBackup extends Panel {
         nomeLabel = new Label("nomeLabel", "Nome");
         rgLabel = new Label("rgLabel", "Rg");
         dataLabel = new Label("dataLabel", "Data de Nascimento/Abertura");
-
         componentes.addAll(Arrays.asList(cnpjLabel, razaoLabel, inscricaoLabel, cpfLabel, nomeLabel, rgLabel, dataLabel));
     }
 

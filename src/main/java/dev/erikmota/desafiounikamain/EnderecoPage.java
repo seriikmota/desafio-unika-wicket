@@ -1,17 +1,19 @@
 package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.models.Endereco;
+import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 
 public class EnderecoPage extends BasePage {
+    private static final ActionsRequest request = new ActionsRequest();
     public EnderecoPage() {
-        //atualizarListas();
+        request.atualizarListas();
 
         try{
-            add(new ListView<>("enderecoList", enderecoList) {
+            add(new ListView<>("enderecoList", request.getEnderecoList()) {
                 @Override
                 protected void populateItem(ListItem<Endereco> item) {
                     final Endereco endereco = item.getModelObject();

@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain.modals;
+/*package dev.erikmota.desafiounikamain.modals;
 
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CadastrarMonitorador extends Panel {
+public class CadModBackup extends Panel {
     List<Component> componentes = new ArrayList<>();
     TextField<String> cnpj, razao, inscricao, cpf, nome, rg;
     EmailTextField email;
@@ -26,7 +26,7 @@ public class CadastrarMonitorador extends Panel {
     Label cnpjLabel, razaoLabel, inscricaoLabel, cpfLabel, nomeLabel, rgLabel, dataLabel;
     private static final ActionsRequest request = new ActionsRequest();
 
-    public CadastrarMonitorador(String id){
+    public CadModBackup(String id){
         super(id);
         Monitorador monitorador = new Monitorador();
 
@@ -104,3 +104,4 @@ public class CadastrarMonitorador extends Panel {
     }
 
 }
+*/

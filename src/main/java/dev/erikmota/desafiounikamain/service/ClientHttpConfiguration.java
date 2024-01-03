@@ -34,7 +34,7 @@ public class ClientHttpConfiguration {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    /*public HttpResponse<String> requestDelete(String uri, Object object) throws IOException, InterruptedException {
+    public HttpResponse<String> requestDelete(String uri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -46,7 +46,7 @@ public class ClientHttpConfiguration {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public HttpResponse<String> requestPut(String uri, Object object) throws IOException, InterruptedException {
+    /*public HttpResponse<String> requestPut(String uri, Object object) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -56,6 +56,6 @@ public class ClientHttpConfiguration {
                 .build();
 
         return client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-    */
+    }*/
+
 }

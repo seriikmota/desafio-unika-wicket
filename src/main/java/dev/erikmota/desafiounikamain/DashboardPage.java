@@ -1,15 +1,17 @@
 package dev.erikmota.desafiounikamain;
 
+import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 
 public class DashboardPage extends BasePage {
+    private static final ActionsRequest request = new ActionsRequest();
     public DashboardPage() {
 
-        atualizarListas();
+        request.atualizarListas();
 
-        add(new Label("quantMonitorador", monitoradorList.size()));
-        add(new Label("quantEndereco", enderecoList.size()));
+        add(new Label("quantMonitorador", request.getMonitoradoresList().size()));
+        add(new Label("quantEndereco", request.getEnderecoList().size()));
 
         add(new Link<Void>("hrefMonitorador") {
             @Override

@@ -1,7 +1,8 @@
 package dev.erikmota.desafiounikamain;
 
-import dev.erikmota.desafiounikamain.modals.CadastrarMonitorador;
+import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
 import dev.erikmota.desafiounikamain.models.Monitorador;
+import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -11,13 +12,14 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 
 public class MonitoradorPage extends BasePage {
+    private static final ActionsRequest request = new ActionsRequest();
     public MonitoradorPage(){
         ModalWindow modal = new ModalWindow("modal").setInitialHeight(500).setCssClassName("w_silver").setResizable(false);
         add(modal);
 
-        atualizarListas();
+        request.atualizarListas();
         try {
-            add(new ListView<>("monitoradorList", monitoradorList) {
+            add(new ListView<>("monitoradorList", request.getMonitoradoresList()) {
                 @Override
                 protected void populateItem(ListItem<Monitorador> item) {
                     final Monitorador monitorador = item.getModelObject();
@@ -33,6 +35,19 @@ public class MonitoradorPage extends BasePage {
                     item.add(new Label("mData", monitorador.getData()));
                     item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
                     item.add(new Label("mAtivo", monitorador.getAtivo().equals(true) ? "Sim" : "Não"));
+                    item.add(new AjaxLink<>("excluir", item.getModel()) {
+                        @Override
+                        public void onClick(AjaxRequestTarget target) {
+                            request.excluir("http://localhost:8081/monitorador/" + monitorador.getId());
+                            setResponsePage(MonitoradorPage.class);
+                        }
+                    });item.add(new AjaxLink<>("editar", item.getModel()) {
+                        @Override
+                        public void onClick(AjaxRequestTarget target) {
+                            //request.editar("http://localhost:8081/monitorador/" + monitorador.getId());
+                            setResponsePage(MonitoradorPage.class);
+                        }
+                    });
                 }
             });
         } catch (NullPointerException e){
@@ -53,10 +68,10 @@ public class MonitoradorPage extends BasePage {
             }
         });
 
-        add(new AjaxLink<Void>("abrirModal") {
+        add(new AjaxLink<Void>("cadastrar") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                modal.setContent(new CadastrarMonitorador(modal.getContentId()));
+                modal.setContent(new ModalMonitorador(modal.getContentId()));
                 modal.show(target);
             }
         });
