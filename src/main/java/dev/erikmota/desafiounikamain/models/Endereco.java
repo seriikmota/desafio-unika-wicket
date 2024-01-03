@@ -17,6 +17,22 @@ public class Endereco implements Serializable {
     @JsonProperty("monitorador_id")
     private Monitorador monitorador;
 
+    public Endereco(){
+
+    }
+    public Endereco(Endereco e) {
+        this.id = e.id;
+        this.endereco = e.endereco;
+        this.numero = e.numero;
+        this.cep = e.cep;
+        this.bairro = e.bairro;
+        this.telefone = e.telefone;
+        this.cidade = e.cidade;
+        this.estado = e.estado;
+        this.principal = e.principal;
+        this.monitorador = e.monitorador;
+    }
+
 
     public Long getId() {
         return id;

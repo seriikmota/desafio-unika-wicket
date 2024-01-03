@@ -9,9 +9,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.validation.validator.DateValidator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -65,6 +68,8 @@ public class ModalMonitorador extends Panel {
         };
         componentes.forEach(form::add);
         form.add(tituloBotao);
+
+        form.add(new FeedbackPanel("feedback1"));
         add(form);
     }
 
@@ -79,7 +84,13 @@ public class ModalMonitorador extends Panel {
         email = new EmailTextField("email");
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false)).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
         tipo = new DropDownChoice<>("tipoPessoa", Arrays.asList(TipoPessoa.values()));
+
+        /*LocalDate localDate = LocalDate.now().minusYears(18);
+        Date date = Date.from(localDate.atStartOfDay().toInstant(java.time.ZoneOffset.UTC));
+        data.add(DateValidator.maximum(date, "dd/mm/yyyy"));*/
+
         componentes.addAll(Arrays.asList(cnpj, razao, inscricao, cpf, nome, rg, data, email, ativo, tipo));
+
     }
     private void inicializarLabels(){
         cnpjLabel = new Label("cnpjLabel", "Cnpj");
