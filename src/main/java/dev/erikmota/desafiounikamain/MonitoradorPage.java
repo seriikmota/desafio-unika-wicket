@@ -44,8 +44,8 @@ public class MonitoradorPage extends BasePage {
                     });item.add(new AjaxLink<>("editar", item.getModel()) {
                         @Override
                         public void onClick(AjaxRequestTarget target) {
-                            //request.editar("http://localhost:8081/monitorador/" + monitorador.getId());
-                            setResponsePage(MonitoradorPage.class);
+                            modal.setContent(new ModalMonitorador(modal.getContentId(), monitorador));
+                            modal.show(target);
                         }
                     });
                 }
@@ -71,7 +71,7 @@ public class MonitoradorPage extends BasePage {
         add(new AjaxLink<Void>("cadastrar") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                modal.setContent(new ModalMonitorador(modal.getContentId()));
+                modal.setContent(new ModalMonitorador(modal.getContentId(), new Monitorador()));
                 modal.show(target);
             }
         });

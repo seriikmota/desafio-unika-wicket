@@ -14,7 +14,7 @@
 <body>
 <wicket:panel>
 
-  <h2 class="mb-4" style="text-align: center;">Cadastrar Monitorador</h2>
+  <h2 class="mb-4" style="text-align: center;" wicket:id="titleModal">Cadastrar/Editar Monitorador</h2>
 
   <form class="row m-2" wicket:id="formMonitorador">
 
@@ -25,37 +25,37 @@
     </div>
 
     <div class="col-4">
-      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm" wicket:id="cnpjLabel">asd</label>
+      <label for="inputCnpj" class="form-label mb-0 form-label-sm form-label-sm" wicket:id="cnpjLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputCnpj" placeholder="00.000.000/0001-00" wicket:id="cnpj" required>
     </div>
 
     <div class="col-4">
-      <label for="inputRazaoSocial" class="form-label mb-0 form-label-sm" wicket:id="razaoLabel">asd</label>
+      <label for="inputRazaoSocial" class="form-label mb-0 form-label-sm" wicket:id="razaoLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputRazaoSocial" placeholder="razao social" wicket:id="razaoSocial" required>
     </div>
 
     <div class="col-4">
-      <label for="inputIE" class="form-label mb-0 form-label-sm" wicket:id="inscricaoLabel">asd</label>
+      <label for="inputIE" class="form-label mb-0 form-label-sm" wicket:id="inscricaoLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputIE" placeholder="inscricao estadual" wicket:id="inscricaoEstadual" required>
     </div>
 
     <div class="col-4">
-      <label for="inputNome" class="form-label mb-0 form-label-sm" wicket:id="nomeLabel">asd</label>
+      <label for="inputNome" class="form-label mb-0 form-label-sm" wicket:id="nomeLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputNome" placeholder="nome" wicket:id="nome" required>
     </div>
 
     <div class="col-4">
-      <label for="inputCpf" class="form-label mb-0 form-label-sm" wicket:id="cpfLabel">asd</label>
+      <label for="inputCpf" class="form-label mb-0 form-label-sm" wicket:id="cpfLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputCpf" placeholder="000.000.000-00" wicket:id="cpf" required>
     </div>
 
     <div class="col-4">
-      <label for="inputRg" class="form-label mb-0 form-label-sm" wicket:id="rgLabel">asd</label>
+      <label for="inputRg" class="form-label mb-0 form-label-sm" wicket:id="rgLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputRg" placeholder="rg" wicket:id="rg" required>
     </div>
 
     <div class="col-6 mt-3 mb-3">
-      <label for="inputData" class="form-label mb-0 form-label-sm" wicket:id="dataLabel">asd</label>
+      <label for="inputData" class="form-label mb-0 form-label-sm" wicket:id="dataLabel"></label>
       <input type="text" class="form-control form-control-sm" id="inputData" placeholder="dd/MM/yyyy" wicket:id="data" required>
     </div>
 
@@ -73,7 +73,7 @@
 
     <div class="col text-end mt-2">
       <button type="button" class="btn btn-secondary">Fechar</button>
-      <button type="submit" value="submit" class="btn btn-primary">Cadastrar</button>
+      <button type="submit" value="submit" class="btn btn-primary" wicket:id="titleButton">Cadastrar/Editar</button>
     </div>
 
     <!--

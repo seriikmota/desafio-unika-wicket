@@ -24,6 +24,24 @@ public class Monitorador implements Serializable {
     private Boolean ativo;
     private List<Endereco> enderecos;
 
+    public Monitorador(){
+
+    }
+    public Monitorador(Monitorador m) {
+        this.id = m.id;
+        this.tipoPessoa = m.tipoPessoa;
+        this.cpf = m.cpf;
+        this.cnpj = m.cnpj;
+        this.nome = m.nome;
+        this.razaoSocial = m.razaoSocial;
+        this.email = m.email;
+        this.rg = m.rg;
+        this.inscricaoEstadual = m.inscricaoEstadual;
+        this.data = m.data;
+        this.ativo = m.ativo;
+        this.enderecos = m.enderecos;
+    }
+
     public Long getId() {
         return id;
     }

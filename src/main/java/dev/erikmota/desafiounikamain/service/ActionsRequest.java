@@ -53,17 +53,18 @@ public class ActionsRequest {
         }
     }
 
-    /*public void editar(String endereco, Object object) {
+    public void editar(String endereco, Object object) {
         try {
             HttpResponse<String> response = client.requestPut(endereco, mapper.writeValueAsString(object));
             System.out.println("Code: " + response.statusCode());
-            System.out.println("Body: " + response.body())
+            System.out.println("Body: " + response.body());
             atualizarListas();
 
         } catch (Exception e) {
             System.out.println("Erro ao editar");
         }
-    }*/
+        System.out.println("Editar");
+    }
 
     public void excluir(String endereco) {
         try {
