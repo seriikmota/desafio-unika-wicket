@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain.modals;
+package dev.erikmota.desafiounikamain.modals.endereco;
 
 import org.apache.wicket.markup.html.panel.Panel;
 

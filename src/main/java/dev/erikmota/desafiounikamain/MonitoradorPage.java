@@ -2,20 +2,30 @@ package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
 import dev.erikmota.desafiounikamain.models.Monitorador;
+import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
+import java.util.Arrays;
 
 public class MonitoradorPage extends BasePage {
     private static final ActionsRequest request = new ActionsRequest();
     public MonitoradorPage(){
         ModalWindow modal = new ModalWindow("modal").setInitialHeight(500).setCssClassName("w_silver").setResizable(false);
+        DropDownChoice<TipoPessoa> filtroPessoa = new DropDownChoice<>("filtroPessoa", Arrays.asList(TipoPessoa.values()));
+        DropDownChoice<String> filtroAtivo = new DropDownChoice<>("filtroAtivo", Model.of("Ativo"), Arrays.asList("Ativo", "Sim", "Nao"));
         add(modal);
+        add(filtroAtivo);
+        add(filtroPessoa);
 
         request.atualizarListas();
         try {
