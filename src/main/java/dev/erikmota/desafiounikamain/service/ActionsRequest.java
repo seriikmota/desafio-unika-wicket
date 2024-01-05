@@ -77,10 +77,26 @@ public class ActionsRequest {
         }
     }
 
+    public <T> List<T> filtrar(String endereco, Class<T> classe) {
+        List<T> lista = new ArrayList<>();
+        try {
+            HttpResponse<String> response = client.requestGet(endereco);
+            String json = response.body();
+            lista = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(ArrayList.class, classe));
+        } catch (Exception e) {
+            System.out.println("Erro ao filtrar");
+        }
+        return lista;
+    }
+
     public List<Monitorador> getMonitoradoresList(){
         return monitoradorList;
     }
     public List<Endereco> getEnderecoList(){
         return enderecoList;
+    }
+
+    public ActionsRequest(){
+        atualizarListas();
     }
 }
