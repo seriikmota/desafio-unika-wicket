@@ -12,6 +12,13 @@
           crossorigin="anonymous"></script>
 
   <title>Title</title>
+
+  <style>
+      div.wicket-modal div.w_content_3 {
+          border: 0;
+          padding: 0;
+      }
+  </style>
 </head>
 <body>
 <!--
@@ -67,54 +74,57 @@
         <div class="card-body table-responsive">
 
           <div class="row">
-            <div class="col d-flex justify-content-between">
 
-                <div class="input-group w-25">
-                  <input type="text" class="form-control" placeholder="Buscar monitoradores" wicket:id="searchT">
-                  <span class="input-group-text"><i class="fa-solid fa-magnifying-glass" style="color: gray;"></i></span>
-                </div>
+            <div class="col-6">
 
+              <div class="input-group w-75">
+                <input type="text" class="form-control" placeholder="Buscar monitoradores" wicket:id="searchT">
+                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass" style="color: gray;"></i></span>
+              </div>
 
-              <button type="button" class="btn btn-success btn-sm" wicket:id="cadastrar">Cadastrar</button>
-            </div>
-          </div>
-          <div class="d-flex mt-1">
-            <a class="btn btn-sm btn-outline-info ps-1 pe-1 pt-0 pb-0" data-bs-toggle="collapse" href="#barraDeFiltros"><i class="fa fa-sliders"></i> Filtrar</a>
-          </div>
-
-          <div class="col-4 mt-1 collapse" style="font-size: 14px; width: 380px" id="barraDeFiltros">
-            <div class="card">
-              <div class="row ps-2">
-                <div class="col-auto pe-0">
-                  <label for="filtroPessoa" class="form-label mt-1">Tipo da Pessoa:</label>
-                </div>
-                <div class="col-auto pe-0">
-                  <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroPessoa" wicket:id="filtroPessoa"></select>
-                </div>
-                <div class="col-auto pe-0">
-                  <label for="filtroAtivo" class="form-label mt-1">Ativo:</label>
-                </div>
-                <div class="col-auto pe-0">
-                  <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroAtivo" wicket:id="filtroAtivo"></select>
+              <div class="d-flex">
+                <div class="mt-1">
+                  <a class="btn btn-sm btn-outline-info ps-1 pe-1 pt-0 pb-0" data-bs-toggle="collapse" href="#barraDeFiltros"><i class="fa fa-sliders"></i> Filtrar</a>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div wicket:id="container" style="table-layout: fixed">
+              <div class="col-4 mt-1 collapse" style="font-size: 14px; width: 380px" id="barraDeFiltros">
+                <div class="card">
+                  <div class="row ps-2">
+                    <div class="col-auto pe-0">
+                      <label for="filtroPessoa" class="form-label mt-1">Tipo da Pessoa:</label>
+                    </div>
+                    <div class="col-auto pe-0">
+                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroPessoa" wicket:id="filtroPessoa"></select>
+                    </div>
+                    <div class="col-auto pe-0">
+                      <label for="filtroAtivo" class="form-label mt-1">Ativo:</label>
+                    </div>
+                    <div class="col-auto pe-0">
+                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroAtivo" wicket:id="filtroAtivo"></select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-6 d-flex justify-content-end align-self-start">
+              <button type="button" class="btn btn-success btn-sm me-1">Gerar Relatório</button>
+              <button type="button" class="btn btn-success btn-sm me-1" wicket:id="importar">Importar</button>
+              <button type="button" class="btn btn-success btn-sm" wicket:id="cadastrar">Cadastrar</button>
+            </div>
+
+          </div>
+          <div wicket:id="container">
           <table class="table table-hover table-striped small table-sm mt-2">
             <thead>
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Tipo Pessoa</th>
               <th scope="col">CNPJ</th>
               <th scope="col">Razão Social</th>
-              <th scope="col">Inscrição Estadual</th>
               <th scope="col">CPF</th>
               <th scope="col">Nome</th>
-              <th scope="col">RG</th>
-              <th scope="col">Email</th>
-              <th scope="col">Data de Nasc/Aber</th>
               <th scope="col">Endereços</th>
               <th scope="col">Ativo</th>
               <th scope="col">Ações</th>
@@ -122,16 +132,11 @@
             </thead>
             <tbody class="table-group-divider text-center align-middle">
             <tr wicket:id="monitoradorList">
-              <td wicket:id="mId"></td>
               <td wicket:id="mTipoPessoa"></td>
               <td wicket:id="mCnpj"></td>
               <td wicket:id="mRazaoSocial"></td>
-              <td wicket:id="mInscricaoEstadual"></td>
               <td wicket:id="mCpf"></td>
               <td wicket:id="mNome"></td>
-              <td wicket:id="mRg"></td>
-              <td wicket:id="mEmail"></td>
-              <td wicket:id="mData"></td>
               <td class="text-center align-middle">
                 <button type="button" class="btn btn-primary badge">
                   <label wicket:id="mQuantidadeEndereco"></label><i class="fa fa-search" style="padding-left: 3px"></i>
@@ -140,6 +145,7 @@
               <td wicket:id="mAtivo"></td>
               <td class="text-center align-middle">
                 <div class="btn-group align-top text-dark">
+                  <button class="btn btn-sm btn-secondary badge" type="button">Relatorio</button>
                   <button class="btn btn-sm btn-warning badge" type="button" wicket:id="editar">Editar</button>
                   <button class="btn btn-sm btn-danger badge" type="button" wicket:id="excluir"><i class="fa fa-trash"></i></button>
                 </div>

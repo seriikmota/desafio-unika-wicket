@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Monitorador implements Serializable {
+public class Monitorador implements Serializable, Comparable<Monitorador>{
     private Long id;
     @JsonProperty("tipoPessoa")
     private TipoPessoa tipoPessoa;
@@ -154,5 +154,18 @@ public class Monitorador implements Serializable {
                 ", ativo=" + ativo +
                 ", enderecos=" + enderecos +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Monitorador m) {
+        int comparacaoTipo = this.tipoPessoa.compareTo(m.tipoPessoa);
+        if (comparacaoTipo != 0) {
+            return comparacaoTipo;
+        }
+        if (this.tipoPessoa == TipoPessoa.FISICA) {
+            return this.nome.compareTo(m.nome);
+        } else {
+            return this.razaoSocial.compareTo(m.razaoSocial);
+        }
     }
 }

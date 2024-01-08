@@ -1,0 +1,44 @@
+<html lang="pt" xmlns:wicket="http://wicket.apache.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"></script>
+
+</head>
+<body>
+<wicket:panel>
+
+  <h2 class="mb-3" style="text-align: center; height: 50px">Importação</h2>
+
+  <div class="container">
+    <div class="row">
+      <div>
+        <label class="form-label">Se já possui o arquivo, insira no local abaixo</label>
+        <input class="form-control form-control-sm w-75" type="file" accept=".xls, .xlsx">
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button type="submit" class="btn btn-success mt-2">Importar</button>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <label class="form-label">Se você não tiver o modelo faça o download para fazer importação</label>
+      <div class="text-right">
+        <button type="button" class="btn btn-outline-secondary">Baixar arquivo <i class="fa-solid fa-download"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</wicket:panel>
+</body>
+</html>
