@@ -2,6 +2,7 @@ package dev.erikmota.desafiounikamain.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
+import org.apache.wicket.util.file.File;
 
 import java.io.Serializable;
 import java.net.http.HttpResponse;
@@ -98,5 +99,16 @@ public class ActionsRequest {
 
     public ActionsRequest(){
         atualizarListas();
+    }
+
+    public void importar(String endereco, File file) {
+        try {
+            HttpResponse<String> response = client.requestImportar(endereco, file.toPath());
+            System.out.println("Code: " + response.statusCode());
+            System.out.println("Body: " + response.body());
+            atualizarListas();
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir");
+        }
     }
 }

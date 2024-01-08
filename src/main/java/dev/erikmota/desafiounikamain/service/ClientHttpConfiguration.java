@@ -6,6 +6,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import java.nio.file.Path;
+
 public class ClientHttpConfiguration {
 
     public HttpResponse<String> requestGet(String uri) {
@@ -58,4 +60,15 @@ public class ClientHttpConfiguration {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
+    public HttpResponse<String> requestImportar(String uri, Path filePath) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .header("Content-Type", "multipart/form-data;boundary=" + boundary) // Certifique-se de fornecer um boundary válido
+                .method("POST", HttpRequest.BodyPublishers.ofFile(filePath))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
 }
