@@ -37,8 +37,8 @@ public class CadModBackup extends Panel {
         tipo.add(new AjaxFormComponentUpdatingBehavior("change") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                TipoPessoa tipoPessoa = tipo.getModelObject();
-                if (tipoPessoa == TipoPessoa.FISICA)
+                TipoPessoa tipo = tipo.getModelObject();
+                if (tipo == TipoPessoa.FISICA)
                     camposFisica();
                 else
                     camposJuridica();
@@ -60,15 +60,15 @@ public class CadModBackup extends Panel {
 
     private void inicializarCampos(){
         cnpj = new TextField<>("cnpj");
-        razao = new TextField<>("razaoSocial");
-        inscricao = new TextField<>("inscricaoEstadual");
+        razao = new TextField<>("razao");
+        inscricao = new TextField<>("inscricao");
         cpf = new TextField<>("cpf");
         nome = new TextField<>("nome");
         rg = new TextField<>("rg");
         data = new DateTextField("data");
         email = new EmailTextField("email");
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false)).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
-        tipo = new DropDownChoice<>("tipoPessoa", Arrays.asList(TipoPessoa.values()));
+        tipo = new DropDownChoice<>("tipo", Arrays.asList(TipoPessoa.values()));
         componentes.addAll(Arrays.asList(cnpj, razao, inscricao, cpf, nome, rg, data, email, ativo, tipo));
     }
     private void inicializarLabels(){

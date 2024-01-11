@@ -1,7 +1,6 @@
 package dev.erikmota.desafiounikamain.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,18 +8,16 @@ import java.util.List;
 
 public class Monitorador implements Serializable, Comparable<Monitorador>{
     private Long id;
-    @JsonProperty("tipoPessoa")
-    private TipoPessoa tipoPessoa;
+    private TipoPessoa tipo;
     private String cpf;
     private String cnpj;
     private String nome;
-    @JsonProperty("razaoSocial")
-    private String razaoSocial;
-    private String email;
+    private String razao;
     private String rg;
-    @JsonProperty("inscricaoEstadual")
-    private String inscricaoEstadual;
-    private String data;
+    private String inscricao;
+    private String email;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate data;
     private Boolean ativo;
     private List<Endereco> enderecos;
 
@@ -29,14 +26,14 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
     }
     public Monitorador(Monitorador m) {
         this.id = m.id;
-        this.tipoPessoa = m.tipoPessoa;
+        this.tipo = m.tipo;
         this.cpf = m.cpf;
         this.cnpj = m.cnpj;
         this.nome = m.nome;
-        this.razaoSocial = m.razaoSocial;
+        this.razao = m.razao;
         this.email = m.email;
         this.rg = m.rg;
-        this.inscricaoEstadual = m.inscricaoEstadual;
+        this.inscricao = m.inscricao;
         this.data = m.data;
         this.ativo = m.ativo;
         this.enderecos = m.enderecos;
@@ -50,12 +47,12 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
         this.id = id;
     }
 
-    public TipoPessoa getTipoPessoa() {
-        return tipoPessoa;
+    public TipoPessoa getTipo() {
+        return tipo;
     }
 
-    public void setTipoPessoa(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    public void setTipo(TipoPessoa tipo) {
+        this.tipo = tipo;
     }
 
     public String getCpf() {
@@ -82,12 +79,12 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
         this.nome = nome;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
+    public String getRazao() {
+        return razao;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
+    public void setRazao(String razao) {
+        this.razao = razao;
     }
 
     public String getEmail() {
@@ -106,19 +103,19 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
         this.rg = rg;
     }
 
-    public String getInscricaoEstadual() {
-        return inscricaoEstadual;
+    public String getInscricao() {
+        return inscricao;
     }
 
-    public void setInscricaoEstadual(String inscricaoEstadual) {
-        this.inscricaoEstadual = inscricaoEstadual;
+    public void setInscricao(String inscricao) {
+        this.inscricao = inscricao;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
@@ -142,14 +139,14 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
     public String toString() {
         return "Monitorador{" +
                 "id=" + id +
-                ", tipoPessoa=" + tipoPessoa +
+                ", tipo=" + tipo +
                 ", cpf='" + cpf + '\'' +
                 ", cnpj='" + cnpj + '\'' +
                 ", nome='" + nome + '\'' +
-                ", razaoSocial='" + razaoSocial + '\'' +
+                ", razao='" + razao + '\'' +
                 ", email='" + email + '\'' +
                 ", rg='" + rg + '\'' +
-                ", inscricaoEstadual='" + inscricaoEstadual + '\'' +
+                ", inscricao='" + inscricao + '\'' +
                 ", data='" + data + '\'' +
                 ", ativo=" + ativo +
                 ", enderecos=" + enderecos +
@@ -158,14 +155,14 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
 
     @Override
     public int compareTo(Monitorador m) {
-        int comparacaoTipo = this.tipoPessoa.compareTo(m.tipoPessoa);
+        int comparacaoTipo = this.tipo.compareTo(m.tipo);
         if (comparacaoTipo != 0) {
             return comparacaoTipo;
         }
-        if (this.tipoPessoa == TipoPessoa.FISICA) {
+        if (this.tipo == TipoPessoa.FISICA) {
             return this.nome.compareTo(m.nome);
         } else {
-            return this.razaoSocial.compareTo(m.razaoSocial);
+            return this.razao.compareTo(m.razao);
         }
     }
 }

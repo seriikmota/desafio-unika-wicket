@@ -2,14 +2,12 @@ package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.modals.ModalImportar;
 import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
-import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -17,11 +15,8 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +26,7 @@ public class MonitoradorPage extends BasePage {
     List<Monitorador> monitoradorList;
     private static final ActionsRequest request = new ActionsRequest();
     final String endereco = "http://localhost:8081/monitorador";
-    private String filtros = "/filtrar?&text=&ativo=&tipoPessoa=";
+    private String filtros = "/filtrar?&text=&ativo=&tipo=";
     public MonitoradorPage(){
         WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
@@ -46,9 +41,9 @@ public class MonitoradorPage extends BasePage {
             @Override
             protected void populateItem(ListItem<Monitorador> item) {
                 final Monitorador monitorador = item.getModelObject();
-                item.add(new Label("mTipoPessoa", monitorador.getTipoPessoa()));
+                item.add(new Label("mTipo", monitorador.getTipo()));
                 item.add(new Label("mCnpj", monitorador.getCnpj()));
-                item.add(new Label("mRazaoSocial", monitorador.getRazaoSocial()));
+                item.add(new Label("mRazao", monitorador.getRazao()));
                 item.add(new Label("mCpf", monitorador.getCpf()));
                 item.add(new Label("mNome", monitorador.getNome()));
                 item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
@@ -100,12 +95,12 @@ public class MonitoradorPage extends BasePage {
                 TipoPessoa valorSelecionado = filtroPessoa.getModelObject();
                 if (valorSelecionado != null){
                     filtros = Arrays.stream(filtros.split("&"))
-                            .map(s -> s.contains("tipoPessoa=") ? "tipoPessoa=" + valorSelecionado : s)
+                            .map(s -> s.contains("tipo=") ? "tipo=" + valorSelecionado : s)
                             .collect(Collectors.joining("&"));
                 }
                 else{
                     filtros = Arrays.stream(filtros.split("&"))
-                            .map(s -> s.contains("tipoPessoa=") ? "tipoPessoa=" : s)
+                            .map(s -> s.contains("tipo=") ? "tipo=" : s)
                             .collect(Collectors.joining("&"));
                 }
                 List<Monitorador> m = request.atualizar(endereco + filtros, Monitorador.class);

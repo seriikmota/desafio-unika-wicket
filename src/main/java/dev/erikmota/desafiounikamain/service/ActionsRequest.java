@@ -4,10 +4,7 @@ import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import org.apache.wicket.util.file.File;
 
-import java.io.Serializable;
 import java.net.http.HttpResponse;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class ActionsRequest {
             lista = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(ArrayList.class, classe));
 
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar lista");
+            e.printStackTrace();
         }
         return lista;
     }
@@ -91,6 +88,7 @@ public class ActionsRequest {
     }
 
     public List<Monitorador> getMonitoradoresList(){
+        System.out.println();
         return monitoradorList;
     }
     public List<Endereco> getEnderecoList(){
@@ -108,7 +106,7 @@ public class ActionsRequest {
             System.out.println("Body: " + response.body());
             atualizarListas();
         } catch (Exception e) {
-            System.out.println("Erro ao excluir");
+            e.printStackTrace();
         }
     }
 }

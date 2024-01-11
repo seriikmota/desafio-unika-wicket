@@ -12,9 +12,7 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.validation.validator.DateValidator;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,8 +45,8 @@ public class ModalMonitorador extends Panel {
         tipo.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                TipoPessoa tipoPessoa = tipo.getModelObject();
-                if (tipoPessoa == TipoPessoa.FISICA)
+                TipoPessoa tipoInput = tipo.getModelObject();
+                if (tipoInput == TipoPessoa.FISICA)
                     camposFisica();
                 else
                     camposJuridica();
@@ -75,15 +73,15 @@ public class ModalMonitorador extends Panel {
 
     private void inicializarCampos(){
         cnpj = new TextField<>("cnpj");
-        razao = new TextField<>("razaoSocial");
-        inscricao = new TextField<>("inscricaoEstadual");
+        razao = new TextField<>("razao");
+        inscricao = new TextField<>("inscricao");
         cpf = new TextField<>("cpf");
         nome = new TextField<>("nome");
         rg = new TextField<>("rg");
         data = new TextField<>("data");
         email = new EmailTextField("email");
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false)).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
-        tipo = new DropDownChoice<>("tipoPessoa", Arrays.asList(TipoPessoa.values()));
+        tipo = new DropDownChoice<>("tipo", Arrays.asList(TipoPessoa.values()));
 
         /*LocalDate localDate = LocalDate.now().minusYears(18);
         Date date = Date.from(localDate.atStartOfDay().toInstant(java.time.ZoneOffset.UTC));
@@ -127,7 +125,7 @@ public class ModalMonitorador extends Panel {
         if (m.getId() != null){
             tituloModal = new Label("titleModal", "Editar Monitorador");
             tituloBotao = new Label("titleButton","Editar");
-            if(m.getTipoPessoa() == TipoPessoa.FISICA)
+            if(m.getTipo() == TipoPessoa.FISICA)
                 camposFisica();
             else
 

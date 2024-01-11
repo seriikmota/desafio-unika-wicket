@@ -130,9 +130,9 @@ public class Endereco implements Serializable {
     }
 
     public String getNomeOrRazao() {
-        if (monitorador.getTipoPessoa() == TipoPessoa.FISICA)
+        if (monitorador.getTipo() == TipoPessoa.FISICA)
             return monitorador.getNome();
         else
-            return monitorador.getRazaoSocial();
+            return monitorador.getRazao();
     }
 }

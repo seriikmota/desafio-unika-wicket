@@ -1,6 +1,7 @@
 package dev.erikmota.desafiounikamain.modals;
 
 
+import dev.erikmota.desafiounikamain.MonitoradorPage;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
@@ -27,6 +28,7 @@ public class ModalImportar extends Panel {
                     File file = new File(System.getProperty("java.io.tmpdir") + "/" + fileUpload.getClientFileName());
                     fileUpload.writeTo(file);
                     request.importar(endereco, file);
+                    setResponsePage(MonitoradorPage.class);
                     info("Upload completed!");
                 } catch (Exception e){
                     e.printStackTrace();
