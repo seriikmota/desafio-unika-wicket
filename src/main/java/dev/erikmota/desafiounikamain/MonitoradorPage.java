@@ -12,6 +12,7 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -48,6 +49,7 @@ public class MonitoradorPage extends BasePage {
                 item.add(new Label("mNome", monitorador.getNome()));
                 item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
                 item.add(new Label("mAtivo", monitorador.getAtivo().equals(true) ? "Sim" : "Não"));
+                item.add(new ExternalLink("relatorioInd", endereco + "/relatorio?id=" + monitorador.getId()));
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
@@ -150,6 +152,8 @@ public class MonitoradorPage extends BasePage {
             }
         });
 
+        ExternalLink pdf = new ExternalLink("relatorio", endereco + "/relatorio");
+
         add(new Link<Void>("hrefDashboard") {
             @Override
             public void onClick() {
@@ -164,13 +168,12 @@ public class MonitoradorPage extends BasePage {
             }
         });
 
+        add(pdf);
         container.add(listView);
         add(filtroAtivo);
         add(filtroPessoa);
         add(modal);
         add(pesquisar);
         add(container);
-
-
     }
 }

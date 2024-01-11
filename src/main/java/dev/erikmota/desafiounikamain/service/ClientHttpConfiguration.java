@@ -91,5 +91,4 @@ public class ClientHttpConfiguration {
     private byte[] buildBytes(String format, Object... args) {
         return String.format(format, args).getBytes(StandardCharsets.UTF_8);
     }
-
 }

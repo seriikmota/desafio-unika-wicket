@@ -1,7 +1,9 @@
 package dev.erikmota.desafiounikamain.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.erikmota.desafiounikamain.MonitoradorPage;
 import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.util.file.File;
 
 import java.net.http.HttpResponse;
@@ -41,7 +43,6 @@ public class ActionsRequest {
 
     public void cadastrar(String endereco, Object object) {
         try {
-            System.out.println(mapper.writeValueAsString(object));
             HttpResponse<String> response = client.requestPost(endereco, mapper.writeValueAsString(object));
             System.out.println("Code: " + response.statusCode());
             System.out.println("Body: " + response.body());
