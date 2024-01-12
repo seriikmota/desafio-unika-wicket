@@ -41,39 +41,57 @@ public class ActionsRequest {
         return lista;
     }
 
-    public void cadastrar(String endereco, Object object) {
+    public String cadastrar(String endereco, Object object) {
+        String feedback = null;
         try {
             HttpResponse<String> response = client.requestPost(endereco, mapper.writeValueAsString(object));
             System.out.println("Code: " + response.statusCode());
-            System.out.println("Body: " + response.body());
+            feedback = response.body();
             atualizarListas();
         } catch (Exception e) {
             System.out.println("Erro ao realizar o cadastro");
         }
+        return feedback;
     }
 
-    public void editar(String endereco, Object object) {
+    public String editar(String endereco, Object object) {
+        String feedback = null;
         try {
             HttpResponse<String> response = client.requestPut(endereco, mapper.writeValueAsString(object));
             System.out.println("Code: " + response.statusCode());
-            System.out.println("Body: " + response.body());
+            feedback = response.body();
             atualizarListas();
 
         } catch (Exception e) {
             System.out.println("Erro ao editar");
         }
-        System.out.println("Editar");
+        return feedback;
     }
 
-    public void excluir(String endereco) {
+    public String excluir(String endereco) {
+        String feedback = null;
         try {
             HttpResponse<String> response = client.requestDelete(endereco);
             System.out.println("Code: " + response.statusCode());
-            System.out.println("Body: " + response.body());
+            feedback = response.body();
             atualizarListas();
         } catch (Exception e) {
             System.out.println("Erro ao excluir");
         }
+        return feedback;
+    }
+
+    public String importar(String endereco, File file) {
+        String feedback = null;
+        try {
+            HttpResponse<String> response = client.requestImportar(endereco, file.toPath());
+            System.out.println("Code: " + response.statusCode());
+            feedback = response.body();
+            atualizarListas();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return feedback;
     }
 
     public <T> List<T> filtrar(String endereco, Class<T> classe) {
@@ -98,16 +116,5 @@ public class ActionsRequest {
 
     public ActionsRequest(){
         atualizarListas();
-    }
-
-    public void importar(String endereco, File file) {
-        try {
-            HttpResponse<String> response = client.requestImportar(endereco, file.toPath());
-            System.out.println("Code: " + response.statusCode());
-            System.out.println("Body: " + response.body());
-            atualizarListas();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

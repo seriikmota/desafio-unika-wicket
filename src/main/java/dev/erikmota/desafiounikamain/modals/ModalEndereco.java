@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain.modals.endereco;
+package dev.erikmota.desafiounikamain.modals;
 
 import dev.erikmota.desafiounikamain.EnderecoPage;
 import dev.erikmota.desafiounikamain.models.Endereco;

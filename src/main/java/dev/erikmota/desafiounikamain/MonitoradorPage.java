@@ -2,6 +2,7 @@ package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.modals.ModalImportar;
 import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
+import dev.erikmota.desafiounikamain.modals.ModalConfirmacao;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
@@ -53,15 +54,16 @@ public class MonitoradorPage extends BasePage {
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        request.excluir(endereco + "/" + monitorador.getId());
-                        setResponsePage(MonitoradorPage.class);
+                        modal.setInitialWidth(450).setInitialHeight(240);
+                        modal.setContent(new ModalConfirmacao(modal.getContentId(), modal, monitorador.getId()));
+                        modal.show(target);
                     }
                 });
                 item.add(new AjaxLink<>("editar", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         modal.setInitialWidth(600).setInitialHeight(500);
-                        modal.setContent(new ModalMonitorador(modal.getContentId(), monitorador));
+                        modal.setContent(new ModalMonitorador(modal.getContentId(), modal,  monitorador));
                         modal.show(target);
                     }
                 });
@@ -138,7 +140,7 @@ public class MonitoradorPage extends BasePage {
             @Override
             public void onClick(AjaxRequestTarget target){
                 modal.setInitialWidth(600).setInitialHeight(500);
-                modal.setContent(new ModalMonitorador(modal.getContentId(), new Monitorador()));
+                modal.setContent(new ModalMonitorador(modal.getContentId(), modal, new Monitorador()));
                 modal.show(target);
             }
         });
