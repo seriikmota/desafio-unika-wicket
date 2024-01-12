@@ -36,7 +36,7 @@ public class ActionsRequest {
             lista = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(ArrayList.class, classe));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Erro ao atualizar");
         }
         return lista;
     }
@@ -45,11 +45,10 @@ public class ActionsRequest {
         String feedback = null;
         try {
             HttpResponse<String> response = client.requestPost(endereco, mapper.writeValueAsString(object));
-            System.out.println("Code: " + response.statusCode());
             feedback = response.body();
             atualizarListas();
         } catch (Exception e) {
-            System.out.println("Erro ao realizar o cadastro");
+            System.out.println("Erro ao cadastrar");
         }
         return feedback;
     }
@@ -58,7 +57,6 @@ public class ActionsRequest {
         String feedback = null;
         try {
             HttpResponse<String> response = client.requestPut(endereco, mapper.writeValueAsString(object));
-            System.out.println("Code: " + response.statusCode());
             feedback = response.body();
             atualizarListas();
 
@@ -72,7 +70,6 @@ public class ActionsRequest {
         String feedback = null;
         try {
             HttpResponse<String> response = client.requestDelete(endereco);
-            System.out.println("Code: " + response.statusCode());
             feedback = response.body();
             atualizarListas();
         } catch (Exception e) {
@@ -85,10 +82,10 @@ public class ActionsRequest {
         String feedback = null;
         try {
             HttpResponse<String> response = client.requestImportar(endereco, file.toPath());
-            System.out.println("Code: " + response.statusCode());
             feedback = response.body();
             atualizarListas();
         } catch (Exception e) {
+            System.out.println("Erro ao importar");
             e.printStackTrace();
         }
         return feedback;
@@ -107,7 +104,6 @@ public class ActionsRequest {
     }
 
     public List<Monitorador> getMonitoradoresList(){
-        System.out.println();
         return monitoradorList;
     }
     public List<Endereco> getEnderecoList(){

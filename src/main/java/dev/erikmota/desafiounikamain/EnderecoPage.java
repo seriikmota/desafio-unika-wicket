@@ -30,7 +30,7 @@ public class EnderecoPage extends BasePage {
                 }
             });
         } catch (NullPointerException e){
-            System.out.println("NullPointerException");
+            e.printStackTrace();
         }
 
         add(new Link<Void>("hrefDashboard") {

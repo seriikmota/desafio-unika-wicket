@@ -7,20 +7,19 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.panel.Panel;
 
-public class ModalConfirmacao extends Panel {
+public class ModalExcluir extends Panel {
     private static final ActionsRequest request = new ActionsRequest();
     final String endereco = "http://localhost:8081/monitorador";
-    public ModalConfirmacao(String id, ModalWindow modal, Long mId) {
+    public ModalExcluir(String id, ModalWindow modal, Long mId) {
         super(id);
-        add(new AjaxLink<Void>("confirm") {
+        add(new AjaxLink<Void>("excluir") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                System.out.println("confirm");
-                modal.close(target);
+                request.excluir(endereco + "/" + mId);
                 setResponsePage(MonitoradorPage.class);
             }
         });
-        add(new AjaxLink<Void>("fechar") {
+        add(new AjaxLink<Void>("close") {
             @Override
             public void onClick(AjaxRequestTarget target){
                 modal.close(target);

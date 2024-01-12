@@ -49,9 +49,8 @@ public class ModalMonitorador extends Panel {
         form.add(new AjaxButton("submit") {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                System.out.println(m);
                 if (tipoFormulario.equals("Editar"))
-                    feedback.error(request.editar("http://localhost:8081/monitorador/" + m.getId(), m));
+                    feedback.info(request.editar("http://localhost:8081/monitorador/" + m.getId(), m));
                 else
                     feedback.info(request.cadastrar("http://localhost:8081/monitorador", m));
                 target.add(feedback);

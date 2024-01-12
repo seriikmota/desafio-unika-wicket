@@ -2,7 +2,7 @@ package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.modals.ModalImportar;
 import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
-import dev.erikmota.desafiounikamain.modals.ModalConfirmacao;
+import dev.erikmota.desafiounikamain.modals.ModalExcluir;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
@@ -55,7 +55,7 @@ public class MonitoradorPage extends BasePage {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         modal.setInitialWidth(450).setInitialHeight(240);
-                        modal.setContent(new ModalConfirmacao(modal.getContentId(), modal, monitorador.getId()));
+                        modal.setContent(new ModalExcluir(modal.getContentId(), modal, monitorador.getId()));
                         modal.show(target);
                     }
                 });
@@ -148,8 +148,8 @@ public class MonitoradorPage extends BasePage {
         add(new AjaxLink<Void>("importar") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                modal.setInitialWidth(500).setInitialHeight(340);
-                modal.setContent(new ModalImportar(modal.getContentId()));
+                modal.setInitialWidth(500).setInitialHeight(370);
+                modal.setContent(new ModalImportar(modal.getContentId(), modal, endereco));
                 modal.show(target);
             }
         });

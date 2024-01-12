@@ -20,13 +20,15 @@
   <div class="container">
     <div class="row">
       <form wicket:id="form">
-        <div>
-          <label class="form-label">Se já possui o arquivo, insira no local abaixo</label>
-          <input class="form-control form-control-sm w-75" type="file" accept=".xls, .xlsx" wicket:id="importar">
+        <label class="form-label">Se já possui o arquivo, insira no local abaixo</label>
+        <div class="input-group mb-1">
+          <input class="form-control form-control-sm" type="file" accept=".xls, .xlsx" wicket:id="file">
+          <div class="input-group-prepend">
+            <button type="submit" class="btn btn-success rounded-end-pill" wicket:id="importar">Importar</button>
+          </div>
         </div>
-        <div class="col d-flex justify-content-end">
-          <button type="submit" class="btn btn-success mt-2">Importar</button>
-        </div>
+
+        <div wicket:id="feedback"></div>
       </form>
     </div>
     <hr>
@@ -38,9 +40,15 @@
         </button>
       </div>
     </div>
+
+
+    <div class="col text-end">
+      <button type="button" class="btn btn-secondary" wicket:id="close">Fechar</button>
+    </div>
+
   </div>
 
-  <div wicket:id="feedbackPanel"></div>
+
 </wicket:panel>
 </body>
 </html>
