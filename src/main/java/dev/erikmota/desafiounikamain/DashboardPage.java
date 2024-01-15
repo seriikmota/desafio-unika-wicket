@@ -20,11 +20,25 @@ public class DashboardPage extends BasePage {
             }
         });
 
-        /*add(new Link<Void>("hrefEndereco") {
+        add(new Link<Void>("hrefEndereco") {
             @Override
             public void onClick() {
                 setResponsePage(EnderecoPage.class);
             }
-        });*/
+        });
+
+        add(new Link<Void>("hrefMonitorador1") {
+            @Override
+            public void onClick() {
+                setResponsePage(MonitoradorPage.class);
+            }
+        });
+
+        add(new Link<Void>("hrefEndereco1") {
+            @Override
+            public void onClick() {
+                setResponsePage(EnderecoPage.class);
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ColGroup;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
@@ -32,12 +33,12 @@ public class MonitoradorPage extends BasePage {
     public MonitoradorPage(){
         WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
-        monitoradorList = request.atualizar(endereco, Monitorador.class);
-        Collections.sort(monitoradorList);
         ModalWindow modal = new ModalWindow("modal").setInitialHeight(500).setCssClassName("w_silver").setResizable(false);
         DropDownChoice<TipoPessoa> filtroPessoa = new DropDownChoice<>("filtroPessoa", Model.of(), Arrays.asList(TipoPessoa.values()));
         DropDownChoice<String> filtroAtivo = new DropDownChoice<>("filtroAtivo", Model.of(), Arrays.asList("Sim", "Nao"));
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
+        monitoradorList = request.atualizar(endereco, Monitorador.class);
+        Collections.sort(monitoradorList);
 
         ListView<Monitorador> listView = new ListView<>("monitoradorList", monitoradorList) {
             @Override
@@ -71,7 +72,7 @@ public class MonitoradorPage extends BasePage {
         };
         listView.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
 
-        filtroAtivo.add(new OnChangeAjaxBehavior() {
+        add(filtroAtivo.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 String valorSelecionado = filtroAtivo.getModelObject();
@@ -91,9 +92,9 @@ public class MonitoradorPage extends BasePage {
                 listView.setList(m);
                 target.add(container);
             }
-        });
+        }));
 
-        filtroPessoa.add(new OnChangeAjaxBehavior() {
+        add(filtroPessoa.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 TipoPessoa valorSelecionado = filtroPessoa.getModelObject();
@@ -108,13 +109,14 @@ public class MonitoradorPage extends BasePage {
                             .collect(Collectors.joining("&"));
                 }
                 List<Monitorador> m = request.atualizar(endereco + filtros, Monitorador.class);
+                System.out.println(endereco+filtros);
                 Collections.sort(m);
                 listView.setList(m);
                 target.add(container);
             }
-        });
+        }));
 
-        pesquisar.add(new OnChangeAjaxBehavior() {
+        add(pesquisar.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 String valor = pesquisar.getModelObject();
@@ -134,7 +136,7 @@ public class MonitoradorPage extends BasePage {
                 listView.setList(m);
                 target.add(container);
             }
-        });
+        }));
 
         add(new AjaxLink<Void>("cadastrar") {
             @Override
@@ -154,7 +156,14 @@ public class MonitoradorPage extends BasePage {
             }
         });
 
-        ExternalLink pdf = new ExternalLink("relatorio", endereco + "/relatorio");
+        add(new ExternalLink("relatorio", endereco + "/relatorio"));
+
+        modal.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
+            List<Monitorador> m = request.atualizar(endereco, Monitorador.class);
+            Collections.sort(m);
+            listView.setList(m);
+            target.add(container);
+        });
 
         add(new Link<Void>("hrefDashboard") {
             @Override
@@ -170,12 +179,8 @@ public class MonitoradorPage extends BasePage {
             }
         });
 
-        add(pdf);
         container.add(listView);
-        add(filtroAtivo);
-        add(filtroPessoa);
         add(modal);
-        add(pesquisar);
         add(container);
     }
 }

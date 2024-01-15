@@ -8,6 +8,7 @@ import org.apache.wicket.util.file.File;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ActionsRequest {
@@ -109,7 +110,6 @@ public class ActionsRequest {
     public List<Endereco> getEnderecoList(){
         return enderecoList;
     }
-
     public ActionsRequest(){
         atualizarListas();
     }
