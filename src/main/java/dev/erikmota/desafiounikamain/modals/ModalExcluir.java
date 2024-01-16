@@ -8,15 +8,14 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.panel.Panel;
 
 public class ModalExcluir extends Panel {
-    private static final ActionsRequest request = new ActionsRequest();
-    final String endereco = "http://localhost:8081/monitorador";
-    public ModalExcluir(String id, ModalWindow modal, Long mId) {
+    private static final ActionsRequest request = ActionsRequest.getInstance();
+    public ModalExcluir(String id, ModalWindow modal, String path) {
         super(id);
         add(new AjaxLink<Void>("excluir") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                request.excluir(endereco + "/" + mId);
-                setResponsePage(MonitoradorPage.class);
+                System.out.println(request.excluir(path));
+                modal.close(target);
             }
         });
         add(new AjaxLink<Void>("close") {

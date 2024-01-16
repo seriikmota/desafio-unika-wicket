@@ -17,8 +17,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.lang.Bytes;
 public class ModalImportar extends Panel {
-    private static final ActionsRequest request = new ActionsRequest();
-    public ModalImportar(String id, ModalWindow modal, String endereco){
+    private static final ActionsRequest request = ActionsRequest.getInstance();
+    public ModalImportar(String id, ModalWindow modal, String path){
         super(id);
         FileUploadField fileUploadField = new FileUploadField("file");
         FeedbackPanel feedback = new FeedbackPanel("feedback");
@@ -32,7 +32,7 @@ public class ModalImportar extends Panel {
                 try{
                     File file = new File(System.getProperty("java.io.tmpdir") + "/" + fileUpload.getClientFileName());
                     fileUpload.writeTo(file);
-                    feedback.info(request.importar(endereco + "/importar", file));
+                    feedback.info(request.importar(path, file));
                 } catch (Exception e){
                     feedback.info("Erro: Insira o arquivo para importar!");
                 }
@@ -49,7 +49,7 @@ public class ModalImportar extends Panel {
                 modal.close(target);
             }
         });
-        add(new ExternalLink("download", endereco + "/modelo"));
+        add(new ExternalLink("download", path + "/modelo"));
         add(form);
     }
 }

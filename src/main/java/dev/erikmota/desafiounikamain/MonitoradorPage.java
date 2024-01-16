@@ -27,9 +27,8 @@ import java.util.stream.Collectors;
 
 public class MonitoradorPage extends BasePage {
     List<Monitorador> monitoradorList;
-    private static final ActionsRequest request = new ActionsRequest();
-    final String endereco = "http://localhost:8081/monitorador";
-    private String filtros = "/filtrar?&text=&ativo=&tipo=";
+    private static final ActionsRequest request = ActionsRequest.getInstance();
+    private String filtros = "monitorador/filtrar?&text=&ativo=&tipo=";
     public MonitoradorPage(){
         WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
@@ -37,10 +36,8 @@ public class MonitoradorPage extends BasePage {
         DropDownChoice<TipoPessoa> filtroPessoa = new DropDownChoice<>("filtroPessoa", Model.of(), Arrays.asList(TipoPessoa.values()));
         DropDownChoice<String> filtroAtivo = new DropDownChoice<>("filtroAtivo", Model.of(), Arrays.asList("Sim", "Nao"));
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
-        monitoradorList = request.atualizar(endereco, Monitorador.class);
-        Collections.sort(monitoradorList);
 
-        ListView<Monitorador> listView = new ListView<>("monitoradorList", monitoradorList) {
+        ListView<Monitorador> listView = new ListView<>("monitoradorList", request.getMonitoradoresList()) {
             @Override
             protected void populateItem(ListItem<Monitorador> item) {
                 final Monitorador monitorador = item.getModelObject();
@@ -51,12 +48,12 @@ public class MonitoradorPage extends BasePage {
                 item.add(new Label("mNome", monitorador.getNome()));
                 item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
                 item.add(new Label("mAtivo", monitorador.getAtivo().equals(true) ? "Sim" : "Não"));
-                item.add(new ExternalLink("relatorioInd", endereco + "/relatorio?id=" + monitorador.getId()));
+                item.add(new ExternalLink("relatorioInd", request.endereco + "monitorador/relatorio?id=" + monitorador.getId()));
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         modal.setInitialWidth(450).setInitialHeight(240);
-                        modal.setContent(new ModalExcluir(modal.getContentId(), modal, monitorador.getId()));
+                        modal.setContent(new ModalExcluir(modal.getContentId(), modal, "monitorador/" + monitorador.getId()));
                         modal.show(target);
                     }
                 });
@@ -87,7 +84,7 @@ public class MonitoradorPage extends BasePage {
                             .map(s -> s.contains("ativo=") ? "ativo=" : s)
                             .collect(Collectors.joining("&"));
                 }
-                List<Monitorador> m = request.atualizar(endereco + filtros, Monitorador.class);
+                List<Monitorador> m = request.obter(filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
                 target.add(container);
@@ -108,8 +105,7 @@ public class MonitoradorPage extends BasePage {
                             .map(s -> s.contains("tipo=") ? "tipo=" : s)
                             .collect(Collectors.joining("&"));
                 }
-                List<Monitorador> m = request.atualizar(endereco + filtros, Monitorador.class);
-                System.out.println(endereco+filtros);
+                List<Monitorador> m = request.obter(filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
                 target.add(container);
@@ -131,7 +127,7 @@ public class MonitoradorPage extends BasePage {
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "+");
-                List<Monitorador> m = request.atualizar(endereco + filtros, Monitorador.class);
+                List<Monitorador> m = request.obter(filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
                 target.add(container);
@@ -151,17 +147,15 @@ public class MonitoradorPage extends BasePage {
             @Override
             public void onClick(AjaxRequestTarget target){
                 modal.setInitialWidth(500).setInitialHeight(370);
-                modal.setContent(new ModalImportar(modal.getContentId(), modal, endereco));
+                modal.setContent(new ModalImportar(modal.getContentId(), modal, "monitorador/importar"));
                 modal.show(target);
             }
         });
 
-        add(new ExternalLink("relatorio", endereco + "/relatorio"));
+        add(new ExternalLink("relatorio", request.endereco + "monitorador/relatorio"));
 
         modal.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
-            List<Monitorador> m = request.atualizar(endereco, Monitorador.class);
-            Collections.sort(m);
-            listView.setList(m);
+            listView.setList(request.getMonitoradoresList());
             target.add(container);
         });
 

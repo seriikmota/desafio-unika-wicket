@@ -1,6 +1,7 @@
 package dev.erikmota.desafiounikamain.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -151,6 +152,25 @@ public class Monitorador implements Serializable, Comparable<Monitorador>{
                 ", ativo=" + ativo +
                 ", enderecos=" + enderecos +
                 '}';
+    }
+
+    /*public String getNomeOrRazao() {
+        String[] partesNome;
+        if (tipo == TipoPessoa.FISICA){
+            partesNome = nome.split("\\s+");
+        }
+        else {
+            partesNome = razao.split("\\s+");
+        }
+        return (partesNome.length > 0) ? partesNome[0] : "";
+    }*/
+
+    @JsonIgnore
+    public String getNomeOrRazao() {
+        if (tipo == TipoPessoa.FISICA)
+            return nome;
+        else
+            return razao;
     }
 
     @Override

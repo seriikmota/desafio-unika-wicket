@@ -1,45 +1,116 @@
 package dev.erikmota.desafiounikamain.modals;
 
-import dev.erikmota.desafiounikamain.EnderecoPage;
+import dev.erikmota.desafiounikamain.models.BooleanChoiceRenderer;
 import dev.erikmota.desafiounikamain.models.Endereco;
+import dev.erikmota.desafiounikamain.models.Monitorador;
+import dev.erikmota.desafiounikamain.models.MonitoradorDropDownChoice;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModalEndereco extends Panel {
-    String tipoFormulario;
-    TextField<String> cep, endereco, bairro, cidade, estado, telefone;
-    private static final ActionsRequest request = new ActionsRequest();
+    List<Component> componentes = new ArrayList<>();
+    TextField<String> cep, endereco, numero, bairro, telefone, cidade;
+    DropDownChoice<String> estado;
+    RadioChoice<Boolean> principal;
+    MonitoradorDropDownChoice monitorador;
+    FeedbackPanel feedback;
+    private static final ActionsRequest request = ActionsRequest.getInstance();
 
-    public ModalEndereco(String id, Endereco endereco){
+    public ModalEndereco(String id, ModalWindow modal, Endereco endereco){
         super(id);
-        if (endereco.getId() == null)
-            tipoFormulario = "Cadastrar";
-        else
-            tipoFormulario = "Editar";
+        String tipoFormulario = (endereco.getId() == null) ? "Cadastrar" : "Editar";
         Endereco e = new Endereco(endereco);
         inicializarCampos();
+        alterarTitulo(endereco);
+        componentes.forEach(c -> c.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
 
-        Form<Endereco> form = new Form<>("formEndereco", new CompoundPropertyModel<>(e)){
+
+        Form<Endereco> form = new Form<>("form", new CompoundPropertyModel<>(e));
+        componentes.forEach(form::add);
+
+        form.add(new AjaxButton("submit") {
             @Override
-            protected void onSubmit() {
+            protected void onSubmit(AjaxRequestTarget target) {
+                Long idMonitorador = monitorador.getModelObject().getId();
                 if (tipoFormulario.equals("Editar"))
-                    request.editar("http://localhost:8081/endereco/" + e.getId(), e);
+                    feedback.info(e.getId());
                 else
-                    request.cadastrar("http://localhost:8081/endereco", e);
-                setResponsePage(EnderecoPage.class);
+                    feedback.info(request.cadastrar("endereco/" + idMonitorador, e));
+                target.add(feedback);
             }
-        };
+        });
+
+        form.add(new AjaxLink<Void>("close") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                modal.close(target);
+            }
+        });
+
         add(form);
     }
 
     private void inicializarCampos(){
+        List<String> estados = new ArrayList<>(Arrays.asList("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+                                                             "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"));
+
         cep = new TextField<>("cep");
         endereco = new TextField<>("endereco");
+        numero = new TextField<>("numero");
         bairro = new TextField<>("bairro");
+//        cidade = new DropDownChoice<>("cidade", Arrays.asList("Anápolis", "Goiânia"));
+        estado = new DropDownChoice<>("estado", estados);
+        monitorador = new MonitoradorDropDownChoice("monitorador", Model.of(new Monitorador()), request.getMonitoradoresList());
         cidade = new TextField<>("cidade");
-        estado = new TextField<>("estado");
         telefone = new TextField<>("telefone");
+        principal = new RadioChoice<>("principal", Arrays.asList(true, false), new BooleanChoiceRenderer()).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
+        feedback = new FeedbackPanel("feedback");
+
+        cep.add(new OnChangeAjaxBehavior() {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (cep.getModelObject() != null){
+                    String buscaCep = cep.getModelObject().replaceAll("[^0-9]", "");
+                    if (buscaCep.length() == 8){
+                        Endereco e = request.buscarCep("endereco/cep/" + buscaCep);
+                        endereco.setModelObject(e.getEndereco());
+                        bairro.setModelObject(e.getBairro());
+                        cidade.setModelObject(e.getCidade());
+                        estado.setModelObject(e.getEstado());
+                        target.add(endereco, bairro, cidade, estado);
+                    }
+                }
+            }
+        });
+
+        componentes.addAll(Arrays.asList(cep, endereco, numero, bairro, cidade, estado, telefone, monitorador, principal, feedback));
+
+
+    }
+
+    public void alterarTitulo(Endereco e) {
+        Label tituloModal;
+        if (e.getId() != null) {
+            tituloModal = new Label("titleModal", "Editar Endereco");
+        } else {
+            tituloModal = new Label("titleModal", "Cadastrar Endereco");
+        }
+        add(tituloModal);
     }
 }

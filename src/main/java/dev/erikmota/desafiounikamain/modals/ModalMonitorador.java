@@ -31,7 +31,7 @@ public class ModalMonitorador extends Panel {
     RadioChoice<Boolean> ativo;
     Label cnpjLabel, razaoLabel, inscricaoLabel, cpfLabel, nomeLabel, rgLabel, dataLabel, tituloModal;
     FeedbackPanel feedback;
-    private static final ActionsRequest request = new ActionsRequest();
+    private static final ActionsRequest request = ActionsRequest.getInstance();
 
     public ModalMonitorador(String id, ModalWindow modal, Monitorador monitorador){
         super(id);
@@ -50,9 +50,9 @@ public class ModalMonitorador extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
                 if (tipoFormulario.equals("Editar"))
-                    feedback.info(request.editar("http://localhost:8081/monitorador/" + m.getId(), m));
+                    feedback.info(request.editar("monitorador/" + m.getId(), m));
                 else
-                    feedback.info(request.cadastrar("http://localhost:8081/monitorador", m));
+                    feedback.info(request.cadastrar("monitorador", m));
                 target.add(feedback);
             }
         });

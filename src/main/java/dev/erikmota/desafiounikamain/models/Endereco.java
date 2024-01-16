@@ -1,10 +1,11 @@
 package dev.erikmota.desafiounikamain.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 
-public class Endereco implements Serializable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Endereco implements Serializable, Comparable<Endereco> {
     private Long id;
     private String endereco;
     private String numero;
@@ -13,9 +14,9 @@ public class Endereco implements Serializable {
     private String telefone;
     private String cidade;
     private String estado;
-    private String principal;
-    @JsonProperty("monitorador_id")
-    private Monitorador monitorador;
+    private Boolean principal;
+    @JsonIgnore
+    private Long monitoradorId;
 
     public Endereco(){
 
@@ -30,7 +31,6 @@ public class Endereco implements Serializable {
         this.cidade = e.cidade;
         this.estado = e.estado;
         this.principal = e.principal;
-        this.monitorador = e.monitorador;
     }
 
 
@@ -98,20 +98,20 @@ public class Endereco implements Serializable {
         this.estado = estado;
     }
 
-    public String getPrincipal() {
+    public Boolean getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(String principal) {
+    public void setPrincipal(Boolean principal) {
         this.principal = principal;
     }
 
-    public Monitorador getMonitorador() {
-        return monitorador;
+    public Long getMonitoradorId() {
+        return monitoradorId;
     }
 
-    public void setMonitorador(Monitorador monitorador) {
-        this.monitorador = monitorador;
+    public void setMonitoradorId(Long monitoradorId) {
+        this.monitoradorId = monitoradorId;
     }
 
     public String toString() {
@@ -125,14 +125,19 @@ public class Endereco implements Serializable {
                 ", cidade='" + cidade + '\'' +
                 ", estado='" + estado + '\'' +
                 ", principal='" + principal + '\'' +
-                ", monitorador=" + monitorador.getNome() +
                 '}';
     }
 
-    public String getNomeOrRazao() {
-        if (monitorador.getTipo() == TipoPessoa.FISICA)
-            return monitorador.getNome();
-        else
-            return monitorador.getRazao();
+    @Override
+    public int compareTo(Endereco e) {
+        int comparacaoEstado = this.estado.compareTo(e.estado);
+        if (comparacaoEstado != 0) {
+            return comparacaoEstado;
+        }
+        int comparacaoCidade = this.cidade.compareTo(e.cidade);
+        if (comparacaoCidade != 0) {
+            return comparacaoCidade;
+        }
+        return this.endereco.compareTo(e.endereco);
     }
 }
