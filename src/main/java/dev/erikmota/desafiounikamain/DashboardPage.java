@@ -1,10 +1,11 @@
 package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 
-public class DashboardPage extends BasePage {
+public class DashboardPage extends WebPage {
     public DashboardPage() {
         ActionsRequest request = ActionsRequest.getInstance();
 

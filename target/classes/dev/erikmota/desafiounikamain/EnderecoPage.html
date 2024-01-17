@@ -10,10 +10,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
           crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <title>Title</title>
+  <title>Endereços</title>
 
   <style>
       div.wicket-modal div.w_content_3 {
@@ -41,9 +41,6 @@
             <li class="nav-item">
               <a class="nav-link active" href="#">Endereco</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Permissões</a>
-            </li>
           </ul>
         </div>
 
@@ -55,7 +52,8 @@
 
               <div class="input-group w-auto">
                 <input type="text" class="form-control" placeholder="Buscar enderecos" wicket:id="searchT">
-                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass" style="color: rgb(128,128,128);"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"
+                                                  style="color: rgb(128,128,128);"></i></span>
               </div>
 
               <div class="d-flex">
@@ -97,7 +95,6 @@
 
             <div class="col-5 d-flex justify-content-end align-self-start">
               <button type="button" class="btn btn-success btn-sm me-1" wicket:id="relatorio">Gerar Relatório</button>
-              <button type="button" class="btn btn-success btn-sm me-1" wicket:id="importar">Importar</button>
               <button type="button" class="btn btn-success btn-sm" wicket:id="cadastrar">Cadastrar</button>
             </div>
 

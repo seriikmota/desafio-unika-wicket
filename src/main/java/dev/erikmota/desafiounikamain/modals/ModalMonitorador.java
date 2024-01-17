@@ -1,6 +1,7 @@
 package dev.erikmota.desafiounikamain.modals;
 
 import dev.erikmota.desafiounikamain.models.BooleanChoiceRenderer;
+import dev.erikmota.desafiounikamain.models.Mask;
 import dev.erikmota.desafiounikamain.models.Monitorador;
 import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
@@ -79,6 +80,10 @@ public class ModalMonitorador extends Panel {
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false), new BooleanChoiceRenderer()).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
         tipo = new DropDownChoice<>("tipo", Arrays.asList(TipoPessoa.values()));
         feedback = new FeedbackPanel("feedback");
+
+        cpf.add(new Mask("999.999.999-99"));
+        cnpj.add(new Mask("99.999.999/0001-99"));
+        data.add(new Mask("99/99/9999"));
 
         tipo.add(new OnChangeAjaxBehavior() {
             @Override

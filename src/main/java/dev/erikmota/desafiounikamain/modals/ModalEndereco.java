@@ -1,9 +1,6 @@
 package dev.erikmota.desafiounikamain.modals;
 
-import dev.erikmota.desafiounikamain.models.BooleanChoiceRenderer;
-import dev.erikmota.desafiounikamain.models.Endereco;
-import dev.erikmota.desafiounikamain.models.Monitorador;
-import dev.erikmota.desafiounikamain.models.MonitoradorDropDownChoice;
+import dev.erikmota.desafiounikamain.models.*;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -74,13 +71,15 @@ public class ModalEndereco extends Panel {
         endereco = new TextField<>("endereco");
         numero = new TextField<>("numero");
         bairro = new TextField<>("bairro");
-//        cidade = new DropDownChoice<>("cidade", Arrays.asList("Anápolis", "Goiânia"));
         estado = new DropDownChoice<>("estado", estados);
         monitorador = new MonitoradorDropDownChoice("monitorador", Model.of(new Monitorador()), request.getMonitoradoresList());
         cidade = new TextField<>("cidade");
         telefone = new TextField<>("telefone");
         principal = new RadioChoice<>("principal", Arrays.asList(true, false), new BooleanChoiceRenderer()).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
         feedback = new FeedbackPanel("feedback");
+
+        telefone.add(new Mask("(99) 99999-9999"));
+        cep.add(new Mask("99999-999"));
 
         cep.add(new OnChangeAjaxBehavior() {
             @Override

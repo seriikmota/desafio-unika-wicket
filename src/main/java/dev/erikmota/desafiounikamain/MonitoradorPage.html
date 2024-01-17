@@ -10,10 +10,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
           crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <title>Title</title>
+  <title>Monitoradores</title>
 
   <style>
       div.wicket-modal div.w_content_3 {
@@ -23,32 +23,7 @@
   </style>
 </head>
 <body>
-<!--
-<nav class="navbar navbar-expand-lg bg-body-tertiary rounded m-1" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-code" style="color: #ffffff;"></i> Gerenciador</a>
 
-    <div class="navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-      </ul>
-
-      <span class="navbar-text">
-        Navbar text with an inline element
-      </span>
-    </div>
-
-  </div>
-</nav>
--->
 <div class="container-fluid mt-3" style="font-size: 17px">
 
   <div class="row flex-lg-nowrap p-2">
@@ -67,9 +42,6 @@
             <li class="nav-item">
               <a class="nav-link" wicket:id="hrefEndereco">Endereco</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Permissões</a>
-            </li>
           </ul>
         </div>
 
@@ -86,7 +58,8 @@
 
               <div class="d-flex">
                 <div class="mt-1">
-                  <a class="btn btn-sm btn-outline-info ps-1 pe-1 pt-0 pb-0" data-bs-toggle="collapse" href="#barraDeFiltros"><i class="fa fa-sliders"></i> Filtrar</a>
+                  <a class="btn btn-sm btn-outline-info ps-1 pe-1 pt-0 pb-0" data-bs-toggle="collapse"
+                     href="#barraDeFiltros"><i class="fa fa-sliders"></i> Filtrar</a>
                 </div>
               </div>
 
@@ -97,13 +70,15 @@
                       <label for="filtroPessoa" class="form-label mt-1">Tipo da Pessoa:</label>
                     </div>
                     <div class="col-auto pe-0">
-                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroPessoa" wicket:id="filtroPessoa"></select>
+                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroPessoa"
+                              wicket:id="filtroPessoa"></select>
                     </div>
                     <div class="col-auto pe-0">
                       <label for="filtroAtivo" class="form-label mt-1">Ativo:</label>
                     </div>
                     <div class="col-auto pe-0">
-                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroAtivo" wicket:id="filtroAtivo"></select>
+                      <select class="form-select form-select-sm pt-0 pb-0 ps-1 pe-auto mt-1" id="filtroAtivo"
+                              wicket:id="filtroAtivo"></select>
                     </div>
                   </div>
                 </div>
@@ -119,42 +94,44 @@
 
           </div>
           <div wicket:id="container">
-          <table class="table table-hover table-striped small table-sm mt-2">
-            <thead>
-            <tr>
-              <th scope="col">Tipo Pessoa</th>
-              <th scope="col">CNPJ</th>
-              <th scope="col">Razão Social</th>
-              <th scope="col">CPF</th>
-              <th scope="col">Nome</th>
-              <th scope="col">Endereços</th>
-              <th scope="col">Ativo</th>
-              <th scope="col">Ações</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider text-center align-middle">
-            <tr wicket:id="monitoradorList">
-              <td wicket:id="mTipo"></td>
-              <td wicket:id="mCnpj"></td>
-              <td wicket:id="mRazao"></td>
-              <td wicket:id="mCpf"></td>
-              <td wicket:id="mNome"></td>
-              <td class="text-center align-middle">
-                <button type="button" class="btn btn-primary badge">
-                  <label wicket:id="mQuantidadeEndereco"></label><i class="fa fa-search" style="padding-left: 3px"></i>
-                </button>
-              </td>
-              <td wicket:id="mAtivo"></td>
-              <td class="text-center align-middle">
-                <div class="btn-group align-top text-dark">
-                  <button class="btn btn-sm btn-secondary badge" type="button" wicket:id="relatorioInd">PDF</button>
-                  <button class="btn btn-sm btn-warning badge" type="button" wicket:id="editar">Editar</button>
-                  <button class="btn btn-sm btn-danger badge" type="button" wicket:id="excluir"><i class="fa fa-trash"></i></button>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+            <table class="table table-hover table-striped small table-sm mt-2">
+              <thead>
+              <tr>
+                <th scope="col">Tipo Pessoa</th>
+                <th scope="col">CNPJ</th>
+                <th scope="col">Razão Social</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Endereços</th>
+                <th scope="col">Ativo</th>
+                <th scope="col">Ações</th>
+              </tr>
+              </thead>
+              <tbody class="table-group-divider text-center align-middle">
+              <tr wicket:id="monitoradorList">
+                <td wicket:id="mTipo"></td>
+                <td wicket:id="mCnpj"></td>
+                <td wicket:id="mRazao"></td>
+                <td wicket:id="mCpf"></td>
+                <td wicket:id="mNome"></td>
+                <td class="text-center align-middle">
+                  <button type="button" class="btn btn-primary badge">
+                    <label wicket:id="mQuantidadeEndereco"></label><i class="fa fa-search"
+                                                                      style="padding-left: 3px"></i>
+                  </button>
+                </td>
+                <td wicket:id="mAtivo"></td>
+                <td class="text-center align-middle">
+                  <div class="btn-group align-top text-dark">
+                    <button class="btn btn-sm btn-secondary badge" type="button" wicket:id="relatorioInd">PDF</button>
+                    <button class="btn btn-sm btn-warning badge" type="button" wicket:id="editar">Editar</button>
+                    <button class="btn btn-sm btn-danger badge" type="button" wicket:id="excluir"><i
+                            class="fa fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

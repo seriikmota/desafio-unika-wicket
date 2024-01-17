@@ -2,17 +2,16 @@ package dev.erikmota.desafiounikamain;
 
 import dev.erikmota.desafiounikamain.modals.ModalEndereco;
 import dev.erikmota.desafiounikamain.modals.ModalExcluir;
-import dev.erikmota.desafiounikamain.modals.ModalImportar;
-import dev.erikmota.desafiounikamain.modals.ModalMonitorador;
 import dev.erikmota.desafiounikamain.models.Endereco;
 import dev.erikmota.desafiounikamain.models.Monitorador;
-import dev.erikmota.desafiounikamain.models.TipoPessoa;
+import dev.erikmota.desafiounikamain.models.MonitoradorDropDownChoice;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextField;
@@ -28,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EnderecoPage extends BasePage {
+public class EnderecoPage extends WebPage {
     private static final ActionsRequest request = ActionsRequest.getInstance();
     private String filtros = "endereco/filtrar?&text=&estado=&cidade=&monitorador=";
     public EnderecoPage() {
@@ -37,7 +36,7 @@ public class EnderecoPage extends BasePage {
         ModalWindow modal = new ModalWindow("modal").setInitialHeight(500).setCssClassName("w_silver").setResizable(false);
         DropDownChoice<String> filtroEstado = new DropDownChoice<>("filtroEstado", Model.of(), getEstados());
         DropDownChoice<String> filtroCidade = new DropDownChoice<>("filtroCidade", Model.of(), getCidades());
-        DropDownChoice<String> filtroMonitorador = new DropDownChoice<>("filtroMonitorador", Model.of(), getMonitoradores());
+        MonitoradorDropDownChoice filtroMonitorador = new MonitoradorDropDownChoice("filtroMonitorador", Model.of(), getMonitoradores());
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
 
 
@@ -89,6 +88,7 @@ public class EnderecoPage extends BasePage {
                             .map(s -> s.contains("cidade=") ? "cidade=" : s)
                             .collect(Collectors.joining("&"));
                 }
+                filtros = filtros.replace(" ", "%20");
                 List<Endereco> e = request.obter(filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
@@ -110,6 +110,7 @@ public class EnderecoPage extends BasePage {
                             .map(s -> s.contains("estado=") ? "estado=" : s)
                             .collect(Collectors.joining("&"));
                 }
+                filtros = filtros.replace(" ", "%20");
                 List<Endereco> e = request.obter(filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
@@ -120,10 +121,10 @@ public class EnderecoPage extends BasePage {
         add(filtroMonitorador.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                String valorSelecionado = filtroMonitorador.getModelObject();
+                Monitorador valorSelecionado = filtroMonitorador.getModelObject();
                 if (valorSelecionado != null){
                     filtros = Arrays.stream(filtros.split("&"))
-                            .map(s -> s.contains("monitorador=") ? "monitorador=" + valorSelecionado : s)
+                            .map(s -> s.contains("monitorador=") ? "monitorador=" + valorSelecionado.getId() : s)
                             .collect(Collectors.joining("&"));
                 }
                 else{
@@ -131,6 +132,7 @@ public class EnderecoPage extends BasePage {
                             .map(s -> s.contains("monitorador=") ? "monitorador=" : s)
                             .collect(Collectors.joining("&"));
                 }
+                filtros = filtros.replace(" ", "%20");
                 List<Endereco> e = request.obter(filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
@@ -152,6 +154,8 @@ public class EnderecoPage extends BasePage {
                             .map(s -> s.contains("text=") ? "text=" : s)
                             .collect(Collectors.joining("&"));
                 }
+                filtros = filtros.replace(" ", "%20");
+                System.out.println(filtros);
                 List<Endereco> e = request.obter(filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
@@ -182,15 +186,6 @@ public class EnderecoPage extends BasePage {
             }
         });
 
-        add(new AjaxLink<Void>("importar") {
-            @Override
-            public void onClick(AjaxRequestTarget target){
-                modal.setInitialWidth(500).setInitialHeight(370);
-                modal.setContent(new ModalImportar(modal.getContentId(), modal, request.endereco + "endereco/"));
-                modal.show(target);
-            }
-        });
-
         add(new ExternalLink("relatorio", request.endereco + "endereco/relatorio"));
 
         modal.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
@@ -217,12 +212,14 @@ public class EnderecoPage extends BasePage {
                 .distinct()
                 .collect(Collectors.toList());
     }
-    private List<String> getMonitoradores() {
-        return request.getEnderecoList()
-                .stream()
-                .map(Endereco::getCidade)
-                .distinct()
-                .collect(Collectors.toList());
+    private List<Monitorador> getMonitoradores() {
+        List<Monitorador> monitoradores = new ArrayList<>();
+        for (Monitorador m : request.getMonitoradoresList()){
+            if (!m.getEnderecos().isEmpty()){
+                monitoradores.add(m);
+            }
+        }
+        return monitoradores;
     }
 }
 

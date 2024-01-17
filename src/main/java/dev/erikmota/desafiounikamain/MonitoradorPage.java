@@ -10,8 +10,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.ColGroup;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.link.ExternalLink;
@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MonitoradorPage extends BasePage {
+public class MonitoradorPage extends WebPage {
     List<Monitorador> monitoradorList;
     private static final ActionsRequest request = ActionsRequest.getInstance();
     private String filtros = "monitorador/filtrar?&text=&ativo=&tipo=";
@@ -126,7 +126,7 @@ public class MonitoradorPage extends BasePage {
                             .map(s -> s.contains("text=") ? "text=" : s)
                             .collect(Collectors.joining("&"));
                 }
-                filtros = filtros.replace(" ", "+");
+                filtros = filtros.replace(" ", "%20");
                 List<Monitorador> m = request.obter(filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
@@ -147,7 +147,7 @@ public class MonitoradorPage extends BasePage {
             @Override
             public void onClick(AjaxRequestTarget target){
                 modal.setInitialWidth(500).setInitialHeight(370);
-                modal.setContent(new ModalImportar(modal.getContentId(), modal, "monitorador/importar"));
+                modal.setContent(new ModalImportar(modal.getContentId(), modal, request.endereco + "monitorador/importar"));
                 modal.show(target);
             }
         });
