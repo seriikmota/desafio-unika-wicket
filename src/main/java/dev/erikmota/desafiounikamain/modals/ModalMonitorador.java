@@ -25,8 +25,7 @@ import java.util.*;
 public class ModalMonitorador extends Panel {
     String tipoFormulario;
     List<Component> componentes = new ArrayList<>();
-    TextField<String> cnpj, razao, inscricao, cpf, nome, rg;
-    EmailTextField email;
+    TextField<String> cnpj, razao, inscricao, cpf, nome, rg, email;
     TextField<Date> data;
     DropDownChoice<TipoPessoa> tipo;
     RadioChoice<Boolean> ativo;
@@ -36,9 +35,8 @@ public class ModalMonitorador extends Panel {
 
     public ModalMonitorador(String id, ModalWindow modal, Monitorador monitorador){
         super(id);
+        String tipoFormulario = (monitorador.getId() == null) ? "Cadastrar" : "Editar";
         Monitorador m = new Monitorador(monitorador);
-        if (monitorador.getId() == null) tipoFormulario = "Cadastrar";
-        else tipoFormulario = "Editar";
         inicializarCampos();
         inicializarLabels();
         alterarTitulo(monitorador);
@@ -76,7 +74,7 @@ public class ModalMonitorador extends Panel {
         nome = new TextField<>("nome");
         rg = new TextField<>("rg");
         data = new TextField<>("data");
-        email = new EmailTextField("email");
+        email = new TextField<>("email");
         ativo = new RadioChoice<>("ativo", Arrays.asList(true, false), new BooleanChoiceRenderer()).setLabelPosition(AbstractChoice.LabelPosition.WRAP_AFTER);
         tipo = new DropDownChoice<>("tipo", Arrays.asList(TipoPessoa.values()));
         feedback = new FeedbackPanel("feedback");

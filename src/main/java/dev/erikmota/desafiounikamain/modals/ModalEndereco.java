@@ -37,18 +37,22 @@ public class ModalEndereco extends Panel {
         alterarTitulo(endereco);
         componentes.forEach(c -> c.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
 
-
         Form<Endereco> form = new Form<>("form", new CompoundPropertyModel<>(e));
         componentes.forEach(form::add);
 
         form.add(new AjaxButton("submit") {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                Long idMonitorador = monitorador.getModelObject().getId();
-                if (tipoFormulario.equals("Editar"))
-                    feedback.info(e.getId());
-                else
-                    feedback.info(request.cadastrar("endereco/" + idMonitorador, e));
+                if (monitorador.getModelObject() != null){
+                    Long idMonitorador = monitorador.getModelObject().getId();
+                    if (tipoFormulario.equals("Editar"))
+                        feedback.info(request.editar("endereco/" + e.getId() + "?idMonitorador=" + idMonitorador, e));
+                    else
+                        feedback.info(request.cadastrar("endereco?idMonitorador=" + idMonitorador, e));
+                }
+                else {
+                    feedback.info("O monitorador deve ser definido!");
+                }
                 target.add(feedback);
             }
         });

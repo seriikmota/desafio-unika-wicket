@@ -21,10 +21,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EnderecoPage extends WebPage {
@@ -155,7 +152,6 @@ public class EnderecoPage extends WebPage {
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                System.out.println(filtros);
                 List<Endereco> e = request.obter(filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);

@@ -147,7 +147,7 @@ public class MonitoradorPage extends WebPage {
             @Override
             public void onClick(AjaxRequestTarget target){
                 modal.setInitialWidth(500).setInitialHeight(370);
-                modal.setContent(new ModalImportar(modal.getContentId(), modal, request.endereco + "monitorador/importar"));
+                modal.setContent(new ModalImportar(modal.getContentId(), modal, "monitorador/importar"));
                 modal.show(target);
             }
         });
