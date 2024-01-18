@@ -1,6 +1,5 @@
 package dev.erikmota.desafiounikamain.modals;
 
-import dev.erikmota.desafiounikamain.MonitoradorPage;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -12,12 +11,21 @@ public class ModalExcluir extends Panel {
     private static final ActionsRequest request = ActionsRequest.getInstance();
     public ModalExcluir(String id, ModalWindow modal, String path) {
         super(id);
+        FeedbackPanel feedback = new FeedbackPanel("feedback");
+        feedback.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
+
+        add(feedback);
 
         add(new AjaxLink<Void>("excluir") {
             @Override
             public void onClick(AjaxRequestTarget target){
-                request.excluir(path);
-                modal.close(target);
+                String feedbackString = request.excluir(path);
+                feedback.info(feedbackString.substring(5));
+                target.add(feedback);
+
+                if (feedbackString.startsWith("200")) {
+                    target.appendJavaScript("setTimeout(function(){ Wicket.Window.get().close(); }, 900);");
+                }
             }
         });
         add(new AjaxLink<Void>("close") {

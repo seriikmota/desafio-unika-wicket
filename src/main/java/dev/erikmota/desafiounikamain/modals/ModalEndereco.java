@@ -18,7 +18,6 @@ import org.apache.wicket.model.Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ModalEndereco extends Panel {
     List<Component> componentes = new ArrayList<>();
@@ -43,17 +42,22 @@ public class ModalEndereco extends Panel {
         form.add(new AjaxButton("submit") {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                if (monitorador.getModelObject() != null){
+                if (monitorador.getModelObject() != null) {
                     Long idMonitorador = monitorador.getModelObject().getId();
-                    if (tipoFormulario.equals("Editar"))
-                        feedback.info(request.editar("endereco/" + e.getId() + "?idMonitorador=" + idMonitorador, e));
-                    else
-                        feedback.info(request.cadastrar("endereco?idMonitorador=" + idMonitorador, e));
-                }
-                else {
+                    String path = tipoFormulario.equals("Editar") ? "endereco/" + e.getId() + "?idMonitorador=" + idMonitorador : "endereco?idMonitorador=" + idMonitorador;
+
+                    String feedbackString = tipoFormulario.equals("Editar") ? request.editar(path, e) : request.cadastrar(path, e);
+
+                    feedback.info(feedbackString.substring(5));
+                    target.add(feedback);
+
+                    if (feedbackString.startsWith("200")) {
+                        target.appendJavaScript("setTimeout(function(){ Wicket.Window.get().close(); }, 900);");
+                    }
+                } else {
                     feedback.info("O monitorador deve ser definido!");
+                    target.add(feedback);
                 }
-                target.add(feedback);
             }
         });
 

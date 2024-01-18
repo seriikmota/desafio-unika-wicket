@@ -18,7 +18,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.model.Model;
 
 import java.util.*;
@@ -37,7 +38,7 @@ public class EnderecoPage extends WebPage {
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
 
 
-        ListView<Endereco> listView = new ListView<>("enderecoList", request.getEnderecoList()) {
+        PageableListView<Endereco> listView = new PageableListView<>("enderecoList", request.getEnderecoList(), 10) {
             @Override
             protected void populateItem(ListItem<Endereco> item) {
                 final Endereco endereco = item.getModelObject();
@@ -48,13 +49,13 @@ public class EnderecoPage extends WebPage {
                 item.add(new Label("eTelefone", endereco.getTelefone()));
                 item.add(new Label("eCidade", endereco.getCidade()));
                 item.add(new Label("eEstado", endereco.getEstado()));
-                item.add(new Label("eMonitorador", endereco.getMonitoradorId()));
+                item.add(new Label("eMonitorador", getNomeMonitorador(endereco.getMonitoradorId())));
                 item.add(new Label("ePrincipal", endereco.getPrincipal().equals(true) ? "Sim" : "Não"));
                 item.add(new ExternalLink("relatorioInd", request.endereco + "endereco/relatorio?id=" + endereco.getId()));
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        modal.setInitialWidth(450).setInitialHeight(240);
+                        modal.setInitialWidth(450).setInitialHeight(300);
                         modal.setContent(new ModalExcluir(modal.getContentId(), modal, "endereco/" + endereco.getId()));
                         modal.show(target);
                     }
@@ -190,6 +191,8 @@ public class EnderecoPage extends WebPage {
             target.add(container);
         });
 
+
+        container.add(new PagingNavigator("navigator", listView));
         container.add(listView);
         add(filtroEstado, filtroCidade, filtroMonitorador, pesquisar, container, modal);
     }
@@ -202,11 +205,11 @@ public class EnderecoPage extends WebPage {
                 .collect(Collectors.toList());
     }
     private List<String> getCidades() {
-        return request.getEnderecoList()
-                .stream()
-                .map(Endereco::getCidade)
-                .distinct()
-                .collect(Collectors.toList());
+            return request.getEnderecoList()
+                    .stream()
+                    .map(Endereco::getCidade)
+                    .distinct()
+                    .collect(Collectors.toList());
     }
     private List<Monitorador> getMonitoradores() {
         List<Monitorador> monitoradores = new ArrayList<>();
@@ -216,6 +219,19 @@ public class EnderecoPage extends WebPage {
             }
         }
         return monitoradores;
+    }
+
+    private String getNomeMonitorador(Long idMonitorador) {
+        Monitorador monitoradorEncontrado = request.getMonitoradoresList()
+                .stream()
+                .filter(m -> Objects.equals(m.getId(), idMonitorador))
+                .findFirst()
+                .orElse(null);
+        if (monitoradorEncontrado != null) {
+            return monitoradorEncontrado.getNomeOrRazao();
+        } else {
+            return null;
+        }
     }
 }
 

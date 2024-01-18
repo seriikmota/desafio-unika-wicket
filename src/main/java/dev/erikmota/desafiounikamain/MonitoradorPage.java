@@ -17,7 +17,8 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.model.Model;
 
 import java.util.Arrays;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MonitoradorPage extends WebPage {
-    List<Monitorador> monitoradorList;
     private static final ActionsRequest request = ActionsRequest.getInstance();
     private String filtros = "monitorador/filtrar?&text=&ativo=&tipo=";
     public MonitoradorPage(){
@@ -37,7 +37,7 @@ public class MonitoradorPage extends WebPage {
         DropDownChoice<String> filtroAtivo = new DropDownChoice<>("filtroAtivo", Model.of(), Arrays.asList("Sim", "Nao"));
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
 
-        ListView<Monitorador> listView = new ListView<>("monitoradorList", request.getMonitoradoresList()) {
+        PageableListView<Monitorador> listView = new PageableListView<>("monitoradorList", request.getMonitoradoresList(), 10) {
             @Override
             protected void populateItem(ListItem<Monitorador> item) {
                 final Monitorador monitorador = item.getModelObject();
@@ -52,7 +52,7 @@ public class MonitoradorPage extends WebPage {
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        modal.setInitialWidth(450).setInitialHeight(240);
+                        modal.setInitialWidth(450).setInitialHeight(300);
                         modal.setContent(new ModalExcluir(modal.getContentId(), modal, "monitorador/" + monitorador.getId()));
                         modal.show(target);
                     }
@@ -173,6 +173,7 @@ public class MonitoradorPage extends WebPage {
             }
         });
 
+        container.add(new PagingNavigator("navigator", listView));
         container.add(listView);
         add(modal);
         add(container);

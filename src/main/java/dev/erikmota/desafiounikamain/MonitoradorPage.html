@@ -93,18 +93,18 @@
             </div>
 
           </div>
-          <div wicket:id="container">
+          <div wicket:id="container" class="table-responsive">
             <table class="table table-hover table-striped small table-sm mt-2">
               <thead>
               <tr>
-                <th scope="col">Tipo Pessoa</th>
-                <th scope="col">CNPJ</th>
-                <th scope="col">Razão Social</th>
-                <th scope="col">CPF</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Endereços</th>
-                <th scope="col">Ativo</th>
-                <th scope="col">Ações</th>
+                <th scope="col" style="width: 100px">Tipo Pessoa</th>
+                <th scope="col" style="width: 150px">CNPJ</th>
+                <th scope="col" class="col-3">Razão Social</th>
+                <th scope="col" style="width: 120px">CPF</th>
+                <th scope="col" class="col-3">Nome</th>
+                <th scope="col" style="width: 80px">Endereços</th>
+                <th scope="col" style="width: 50px">Ativo</th>
+                <th scope="col" style="width: 110px">Ações</th>
               </tr>
               </thead>
               <tbody class="table-group-divider text-center align-middle">
@@ -127,6 +127,7 @@
               </tr>
               </tbody>
             </table>
+            <div wicket:id="navigator"></div>
           </div>
         </div>
       </div>

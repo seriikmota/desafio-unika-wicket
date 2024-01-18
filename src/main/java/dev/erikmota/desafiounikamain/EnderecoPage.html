@@ -103,16 +103,16 @@
             <table class="table table-hover table-striped small table-sm mt-2">
               <thead>
               <tr>
-                <th scope="col">Cep</th>
+                <th scope="col" style="width: 85px">Cep</th>
                 <th scope="col">Endereço</th>
-                <th scope="col">Numero</th>
+                <th scope="col" style="width: 65px">Número</th>
                 <th scope="col">Bairro</th>
-                <th scope="col">Telefone</th>
                 <th scope="col">Cidade</th>
-                <th scope="col">Estado</th>
+                <th scope="col" style="width: 55px">Estado</th>
+                <th scope="col" style="width: 125px">Telefone</th>
                 <th scope="col">Monitorador</th>
-                <th scope="col">Principal</th>
-                <th scope="col">Ações</th>
+                <th scope="col" style="width: 70px">Principal</th>
+                <th scope="col" style="width: 110px">Ações</th>
               </tr>
               </thead>
               <tbody class="table-group-divider text-center align-middle">
@@ -121,9 +121,9 @@
                 <td wicket:id="eEndereco"></td>
                 <td wicket:id="eNumero"></td>
                 <td wicket:id="eBairro"></td>
-                <td wicket:id="eTelefone"></td>
                 <td wicket:id="eCidade"></td>
                 <td wicket:id="eEstado"></td>
+                <td wicket:id="eTelefone"></td>
                 <td wicket:id="eMonitorador"></td>
                 <td wicket:id="ePrincipal"></td>
                 <td class="text-center align-middle">
@@ -137,6 +137,7 @@
               </tr>
               </tbody>
             </table>
+            <div wicket:id="navigator"></div>
           </div>
         </div>
       </div>

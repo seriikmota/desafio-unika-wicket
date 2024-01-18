@@ -7,7 +7,6 @@ import dev.erikmota.desafiounikamain.models.TipoPessoa;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -17,13 +16,11 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.util.time.Duration;
 
 
 import java.util.*;
 
 public class ModalMonitorador extends Panel {
-    String tipoFormulario;
     List<Component> componentes = new ArrayList<>();
     TextField<String> cnpj, razao, inscricao, cpf, nome, rg, email;
     TextField<Date> data;
@@ -48,11 +45,15 @@ public class ModalMonitorador extends Panel {
         form.add(new AjaxButton("submit") {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                if (tipoFormulario.equals("Editar"))
-                    feedback.info(request.editar("monitorador/" + m.getId(), m));
-                else
-                    feedback.info(request.cadastrar("monitorador", m));
+                String path = tipoFormulario.equals("Editar") ? "monitorador/" + m.getId() : "monitorador";
+                String feedbackString = tipoFormulario.equals("Editar") ? request.editar(path, m) : request.cadastrar(path, m);
+
+                feedback.info(feedbackString.substring(5));
                 target.add(feedback);
+
+                if (feedbackString.startsWith("200")) {
+                    target.appendJavaScript("setTimeout(function(){ Wicket.Window.get().close(); }, 900);");
+                }
             }
         });
 

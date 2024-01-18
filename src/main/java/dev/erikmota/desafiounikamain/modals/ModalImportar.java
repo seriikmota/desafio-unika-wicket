@@ -1,13 +1,10 @@
 package dev.erikmota.desafiounikamain.modals;
 
-
-import dev.erikmota.desafiounikamain.MonitoradorPage;
 import dev.erikmota.desafiounikamain.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
@@ -29,14 +26,19 @@ public class ModalImportar extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
                 FileUpload fileUpload = fileUploadField.getFileUpload();
-                try{
+                try {
                     File file = new File(System.getProperty("java.io.tmpdir") + "/" + fileUpload.getClientFileName());
                     fileUpload.writeTo(file);
-                    feedback.info(request.importar(path, file));
-                } catch (Exception e){
+                    String feedbackString = request.importar(path, file);
+                    feedback.info(feedbackString.substring(5));
+                    target.add(feedback);
+
+                    if (feedbackString.startsWith("200"))
+                        target.appendJavaScript("setTimeout(function(){ Wicket.Window.get().close(); }, 900);");
+                } catch (Exception e) {
                     feedback.info("Erro: Insira o arquivo para importar!");
+                    target.add(feedback);
                 }
-                target.add(feedback);
             }
         });
         form.setMultiPart(true);
@@ -49,7 +51,7 @@ public class ModalImportar extends Panel {
                 modal.close(target);
             }
         });
-        add(new ExternalLink("download", path + "/modelo"));
+        add(new ExternalLink("download", request.endereco + path + "/modelo"));
         add(form);
     }
 }
