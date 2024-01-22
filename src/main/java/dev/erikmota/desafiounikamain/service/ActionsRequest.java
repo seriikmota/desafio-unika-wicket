@@ -29,13 +29,13 @@ public class ActionsRequest {
     public void atualizarListas(){
         monitoradorList = obter("monitorador", Monitorador.class);
         enderecoList = obter("endereco", Endereco.class);
-        enderecoList.forEach(endereco -> {
-            monitoradorList.stream()
-                    .filter(monitorador -> monitorador.getEnderecos().stream()
-                            .anyMatch(enderecoMonitorador -> enderecoMonitorador.getCep().equals(endereco.getCep())))
-                    .findFirst()
-                    .ifPresent(monitorador -> endereco.setMonitoradorId(monitorador.getId()));
-        });
+        enderecoList.forEach(endereco ->
+                monitoradorList.stream()
+                        .filter(monitorador -> monitorador.getEnderecos().stream()
+                                .anyMatch(enderecoMonitorador -> enderecoMonitorador.getCep().equals(endereco.getCep())))
+                        .findFirst()
+                        .ifPresent(endereco::setMonitorador)
+        );
         Collections.sort(monitoradorList);
         Collections.sort(enderecoList);
     }

@@ -15,8 +15,7 @@ public class Endereco implements Serializable, Comparable<Endereco> {
     private String cidade;
     private String estado;
     private Boolean principal;
-    @JsonIgnore
-    private Long monitoradorId;
+    private Monitorador monitorador;
 
     public Endereco(){
 
@@ -31,6 +30,7 @@ public class Endereco implements Serializable, Comparable<Endereco> {
         this.cidade = e.cidade;
         this.estado = e.estado;
         this.principal = e.principal;
+        this.monitorador = e.monitorador;
     }
 
 
@@ -106,12 +106,13 @@ public class Endereco implements Serializable, Comparable<Endereco> {
         this.principal = principal;
     }
 
-    public Long getMonitoradorId() {
-        return monitoradorId;
+
+    public void setMonitorador(Monitorador monitorador){
+        this.monitorador = monitorador;
     }
 
-    public void setMonitoradorId(Long monitoradorId) {
-        this.monitoradorId = monitoradorId;
+    public Monitorador getMonitorador() {
+        return monitorador;
     }
 
     public String toString() {

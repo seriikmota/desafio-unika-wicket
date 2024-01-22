@@ -87,7 +87,8 @@
             </div>
 
             <div class="col-5 d-flex justify-content-end align-self-start">
-              <button type="button" class="btn btn-success btn-sm me-1" wicket:id="relatorio">Gerar Relatório</button>
+              <button type="button" class="btn btn-success btn-sm me-1" wicket:id="relatorioPdf">PDF</button>
+              <button type="button" class="btn btn-success btn-sm me-1" wicket:id="relatorioExcel">EXCEL</button>
               <button type="button" class="btn btn-success btn-sm me-1" wicket:id="importar">Importar</button>
               <button type="button" class="btn btn-success btn-sm" wicket:id="cadastrar">Cadastrar</button>
             </div>
@@ -118,7 +119,8 @@
                 <td wicket:id="mAtivo"></td>
                 <td class="text-center align-middle">
                   <div class="btn-group align-top text-dark">
-                    <button class="btn btn-sm btn-secondary badge" type="button" wicket:id="relatorioInd">PDF</button>
+                    <button class="btn btn-sm btn-secondary badge" type="button" wicket:id="relatorioPdfInd">PDF</button>
+                    <button class="btn btn-sm btn-secondary badge" type="button" wicket:id="relatorioExInd">EXCEL</button>
                     <button class="btn btn-sm btn-warning badge" type="button" wicket:id="editar">Editar</button>
                     <button class="btn btn-sm btn-danger badge" type="button" wicket:id="excluir"><i
                             class="fa fa-trash"></i></button>

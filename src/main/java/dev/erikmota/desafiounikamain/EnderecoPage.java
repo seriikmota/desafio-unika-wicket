@@ -27,7 +27,10 @@ import java.util.stream.Collectors;
 
 public class EnderecoPage extends WebPage {
     private static final ActionsRequest request = ActionsRequest.getInstance();
-    private String filtros = "endereco/filtrar?&text=&estado=&cidade=&monitorador=";
+    private String filtros = "?&text=&estado=&cidade=&monitorador=";
+    ExternalLink linkPdf = new ExternalLink("relatorioPdf", request.endereco + "endereco/relatorioPdf" + filtros);
+    ExternalLink linkExcel = new ExternalLink("relatorioExcel", request.endereco + "endereco/relatorioExcel" + filtros);
+
     public EnderecoPage() {
         WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
@@ -38,7 +41,7 @@ public class EnderecoPage extends WebPage {
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
 
 
-        PageableListView<Endereco> listView = new PageableListView<>("enderecoList", request.getEnderecoList(), 10) {
+        PageableListView<Endereco> listView = new PageableListView<>("enderecoList", request.getEnderecoList(), 15) {
             @Override
             protected void populateItem(ListItem<Endereco> item) {
                 final Endereco endereco = item.getModelObject();
@@ -49,9 +52,10 @@ public class EnderecoPage extends WebPage {
                 item.add(new Label("eTelefone", endereco.getTelefone()));
                 item.add(new Label("eCidade", endereco.getCidade()));
                 item.add(new Label("eEstado", endereco.getEstado()));
-                item.add(new Label("eMonitorador", getNomeMonitorador(endereco.getMonitoradorId())));
+                item.add(new Label("eMonitorador", getNomeMonitorador(endereco.getCep())));
                 item.add(new Label("ePrincipal", endereco.getPrincipal().equals(true) ? "Sim" : "Não"));
-                item.add(new ExternalLink("relatorioInd", request.endereco + "endereco/relatorio?id=" + endereco.getId()));
+                item.add(new ExternalLink("relatorioPdfInd", request.endereco + "endereco/relatorioPdf?id=" + endereco.getId()));
+                item.add(new ExternalLink("relatorioExInd", request.endereco + "endereco/relatorioExcel?id=" + endereco.getId()));
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
@@ -72,25 +76,29 @@ public class EnderecoPage extends WebPage {
         };
         listView.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
 
+        linkPdf.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
+        linkExcel.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
+        add(linkPdf, linkExcel);
+
         add(filtroCidade.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 String valorSelecionado = filtroCidade.getModelObject();
-                if (valorSelecionado != null){
+                if (valorSelecionado != null) {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("cidade=") ? "cidade=" + valorSelecionado : s)
                             .collect(Collectors.joining("&"));
-                }
-                else{
+                } else {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("cidade=") ? "cidade=" : s)
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                List<Endereco> e = request.obter(filtros, Endereco.class);
+                List<Endereco> e = request.obter("endereco/filtrar" + filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -98,21 +106,21 @@ public class EnderecoPage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 String valorSelecionado = filtroEstado.getModelObject();
-                if (valorSelecionado != null){
+                if (valorSelecionado != null) {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("estado=") ? "estado=" + valorSelecionado : s)
                             .collect(Collectors.joining("&"));
-                }
-                else{
+                } else {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("estado=") ? "estado=" : s)
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                List<Endereco> e = request.obter(filtros, Endereco.class);
+                List<Endereco> e = request.obter("endereco/filtrar" + filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -120,21 +128,21 @@ public class EnderecoPage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 Monitorador valorSelecionado = filtroMonitorador.getModelObject();
-                if (valorSelecionado != null){
+                if (valorSelecionado != null) {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("monitorador=") ? "monitorador=" + valorSelecionado.getId() : s)
                             .collect(Collectors.joining("&"));
-                }
-                else{
+                } else {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("monitorador=") ? "monitorador=" : s)
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                List<Endereco> e = request.obter(filtros, Endereco.class);
+                List<Endereco> e = request.obter("endereco/filtrar" + filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -142,21 +150,21 @@ public class EnderecoPage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 String valor = pesquisar.getModelObject();
-                if (valor != null){
+                if (valor != null) {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("text=") ? "text=" + valor : s)
                             .collect(Collectors.joining("&"));
-                }
-                else{
+                } else {
                     filtros = Arrays.stream(filtros.split("&"))
                             .map(s -> s.contains("text=") ? "text=" : s)
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                List<Endereco> e = request.obter(filtros, Endereco.class);
+                List<Endereco> e = request.obter("endereco/filtrar" + filtros, Endereco.class);
                 Collections.sort(e);
                 listView.setList(e);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -176,14 +184,12 @@ public class EnderecoPage extends WebPage {
 
         add(new AjaxLink<Void>("cadastrar") {
             @Override
-            public void onClick(AjaxRequestTarget target){
+            public void onClick(AjaxRequestTarget target) {
                 modal.setInitialWidth(600).setInitialHeight(500);
                 modal.setContent(new ModalEndereco(modal.getContentId(), modal, new Endereco()));
                 modal.show(target);
             }
         });
-
-        add(new ExternalLink("relatorio", request.endereco + "endereco/relatorio"));
 
         modal.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
             List<Endereco> e = request.getEnderecoList();
@@ -191,47 +197,53 @@ public class EnderecoPage extends WebPage {
             target.add(container);
         });
 
-
         container.add(new PagingNavigator("navigator", listView));
         container.add(listView);
         add(filtroEstado, filtroCidade, filtroMonitorador, pesquisar, container, modal);
     }
 
-    private List<String> getEstados(){
+    private List<String> getEstados() {
         return request.getEnderecoList()
                 .stream()
                 .map(Endereco::getEstado)
                 .distinct()
                 .collect(Collectors.toList());
     }
+
     private List<String> getCidades() {
-            return request.getEnderecoList()
-                    .stream()
-                    .map(Endereco::getCidade)
-                    .distinct()
-                    .collect(Collectors.toList());
+        return request.getEnderecoList()
+                .stream()
+                .map(Endereco::getCidade)
+                .distinct()
+                .collect(Collectors.toList());
     }
+
     private List<Monitorador> getMonitoradores() {
         List<Monitorador> monitoradores = new ArrayList<>();
-        for (Monitorador m : request.getMonitoradoresList()){
-            if (!m.getEnderecos().isEmpty()){
+        for (Monitorador m : request.getMonitoradoresList()) {
+            if (!m.getEnderecos().isEmpty()) {
                 monitoradores.add(m);
             }
         }
         return monitoradores;
     }
 
-    private String getNomeMonitorador(Long idMonitorador) {
-        Monitorador monitoradorEncontrado = request.getMonitoradoresList()
-                .stream()
-                .filter(m -> Objects.equals(m.getId(), idMonitorador))
-                .findFirst()
-                .orElse(null);
-        if (monitoradorEncontrado != null) {
-            return monitoradorEncontrado.getNomeOrRazao();
-        } else {
-            return null;
+    private String getNomeMonitorador(String cep){
+        for (Monitorador m : request.getMonitoradoresList()) {
+            for (Endereco e : m.getEnderecos()) {
+                if (Objects.equals(e.getCep(), cep)) {
+                    return m.getNomeOrRazao();
+                }
+            }
         }
+        return "";
+    }
+
+    private void atualizarRelatorios() {
+        String urlPdf = request.endereco + "endereco/relatorioPdf" + filtros;
+        String urlExcel = request.endereco + "endereco/relatorioExcel" + filtros;
+        linkPdf.setDefaultModel(Model.of(urlPdf));
+        linkExcel.setDefaultModel(Model.of(urlExcel));
     }
 }
 

@@ -19,6 +19,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.markup.html.pages.RedirectPage;
 import org.apache.wicket.model.Model;
 
 import java.util.Arrays;
@@ -28,7 +29,10 @@ import java.util.stream.Collectors;
 
 public class MonitoradorPage extends WebPage {
     private static final ActionsRequest request = ActionsRequest.getInstance();
-    private String filtros = "monitorador/filtrar?&text=&ativo=&tipo=";
+    private String filtros = "?&text=&ativo=&tipo=";
+    ExternalLink linkPdf = new ExternalLink("relatorioPdf", request.endereco + "monitorador/relatorioPdf" + filtros);
+    ExternalLink linkExcel = new ExternalLink("relatorioExcel", request.endereco + "monitorador/relatorioExcel" + filtros);
+
     public MonitoradorPage(){
         WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
@@ -37,7 +41,7 @@ public class MonitoradorPage extends WebPage {
         DropDownChoice<String> filtroAtivo = new DropDownChoice<>("filtroAtivo", Model.of(), Arrays.asList("Sim", "Nao"));
         TextField<String> pesquisar = new TextField<>("searchT", Model.of());
 
-        PageableListView<Monitorador> listView = new PageableListView<>("monitoradorList", request.getMonitoradoresList(), 10) {
+        PageableListView<Monitorador> listView = new PageableListView<>("monitoradorList", request.getMonitoradoresList(), 15) {
             @Override
             protected void populateItem(ListItem<Monitorador> item) {
                 final Monitorador monitorador = item.getModelObject();
@@ -48,7 +52,8 @@ public class MonitoradorPage extends WebPage {
                 item.add(new Label("mNome", monitorador.getNome()));
                 item.add(new Label("mQuantidadeEndereco", monitorador.getEnderecos().size()));
                 item.add(new Label("mAtivo", monitorador.getAtivo().equals(true) ? "Sim" : "Não"));
-                item.add(new ExternalLink("relatorioInd", request.endereco + "monitorador/relatorio?id=" + monitorador.getId()));
+                item.add(new ExternalLink("relatorioPdfInd", request.endereco + "monitorador/relatorioPdf?id=" + monitorador.getId()));
+                item.add(new ExternalLink("relatorioExInd", request.endereco + "monitorador/relatorioExcel?id=" + monitorador.getId()));
                 item.add(new AjaxLink<>("excluir", item.getModel()) {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
@@ -69,6 +74,10 @@ public class MonitoradorPage extends WebPage {
         };
         listView.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
 
+        linkPdf.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
+        linkExcel.setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true);
+        add(linkPdf, linkExcel);
+
         add(filtroAtivo.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
@@ -84,10 +93,11 @@ public class MonitoradorPage extends WebPage {
                             .map(s -> s.contains("ativo=") ? "ativo=" : s)
                             .collect(Collectors.joining("&"));
                 }
-                List<Monitorador> m = request.obter(filtros, Monitorador.class);
+                List<Monitorador> m = request.obter("monitorador/filtrar" + filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -105,10 +115,11 @@ public class MonitoradorPage extends WebPage {
                             .map(s -> s.contains("tipo=") ? "tipo=" : s)
                             .collect(Collectors.joining("&"));
                 }
-                List<Monitorador> m = request.obter(filtros, Monitorador.class);
+                List<Monitorador> m = request.obter("monitorador/filtrar" + filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -127,10 +138,11 @@ public class MonitoradorPage extends WebPage {
                             .collect(Collectors.joining("&"));
                 }
                 filtros = filtros.replace(" ", "%20");
-                List<Monitorador> m = request.obter(filtros, Monitorador.class);
+                List<Monitorador> m = request.obter("monitorador/filtrar" + filtros, Monitorador.class);
                 Collections.sort(m);
                 listView.setList(m);
-                target.add(container);
+                atualizarRelatorios();
+                target.add(container, linkPdf, linkExcel);
             }
         }));
 
@@ -151,8 +163,6 @@ public class MonitoradorPage extends WebPage {
                 modal.show(target);
             }
         });
-
-        add(new ExternalLink("relatorio", request.endereco + "monitorador/relatorio"));
 
         modal.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
             listView.setList(request.getMonitoradoresList());
@@ -177,5 +187,12 @@ public class MonitoradorPage extends WebPage {
         container.add(listView);
         add(modal);
         add(container);
+    }
+
+    private void atualizarRelatorios(){
+        String urlPdf = request.endereco + "monitorador/relatorioPdf" + filtros;
+        String urlExcel = request.endereco + "monitorador/relatorioExcel" + filtros;
+        linkPdf.setDefaultModel(Model.of(urlPdf));
+        linkExcel.setDefaultModel(Model.of(urlExcel));
     }
 }
