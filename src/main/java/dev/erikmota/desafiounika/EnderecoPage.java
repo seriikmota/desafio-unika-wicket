@@ -1,11 +1,11 @@
-package dev.erikmota.desafiounikamain;
+package dev.erikmota.desafiounika;
 
-import dev.erikmota.desafiounikamain.modals.ModalEndereco;
-import dev.erikmota.desafiounikamain.modals.ModalExcluir;
-import dev.erikmota.desafiounikamain.models.Endereco;
-import dev.erikmota.desafiounikamain.models.Monitorador;
-import dev.erikmota.desafiounikamain.models.MonitoradorDropDownChoice;
-import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import dev.erikmota.desafiounika.modals.ModalEndereco;
+import dev.erikmota.desafiounika.modals.ModalExcluir;
+import dev.erikmota.desafiounika.models.Endereco;
+import dev.erikmota.desafiounika.models.Monitorador;
+import dev.erikmota.desafiounika.models.MonitoradorDropDownChoice;
+import dev.erikmota.desafiounika.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;

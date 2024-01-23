@@ -1,6 +1,6 @@
-package dev.erikmota.desafiounikamain;
+package dev.erikmota.desafiounika;
 
-import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import dev.erikmota.desafiounika.service.ActionsRequest;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;

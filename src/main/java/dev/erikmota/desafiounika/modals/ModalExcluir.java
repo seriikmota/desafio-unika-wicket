@@ -1,6 +1,6 @@
-package dev.erikmota.desafiounikamain.modals;
+package dev.erikmota.desafiounika.modals;
 
-import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import dev.erikmota.desafiounika.service.ActionsRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;

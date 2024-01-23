@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain.models;
+package dev.erikmota.desafiounika.models;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;

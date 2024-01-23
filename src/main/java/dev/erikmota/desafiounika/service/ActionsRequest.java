@@ -1,8 +1,8 @@
-package dev.erikmota.desafiounikamain.service;
+package dev.erikmota.desafiounika.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.erikmota.desafiounikamain.models.Endereco;
-import dev.erikmota.desafiounikamain.models.Monitorador;
+import dev.erikmota.desafiounika.models.Endereco;
+import dev.erikmota.desafiounika.models.Monitorador;
 import org.apache.wicket.util.file.File;
 
 import java.net.http.HttpResponse;

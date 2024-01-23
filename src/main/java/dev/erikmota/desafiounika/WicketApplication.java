@@ -1,4 +1,4 @@
-package dev.erikmota.desafiounikamain;
+package dev.erikmota.desafiounika;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;

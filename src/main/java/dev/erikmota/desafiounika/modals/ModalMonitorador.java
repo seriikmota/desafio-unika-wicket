@@ -1,10 +1,10 @@
-package dev.erikmota.desafiounikamain.modals;
+package dev.erikmota.desafiounika.modals;
 
-import dev.erikmota.desafiounikamain.models.BooleanChoiceRenderer;
-import dev.erikmota.desafiounikamain.models.Mask;
-import dev.erikmota.desafiounikamain.models.Monitorador;
-import dev.erikmota.desafiounikamain.models.TipoPessoa;
-import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import dev.erikmota.desafiounika.models.BooleanChoiceRenderer;
+import dev.erikmota.desafiounika.models.Mask;
+import dev.erikmota.desafiounika.models.Monitorador;
+import dev.erikmota.desafiounika.models.TipoPessoa;
+import dev.erikmota.desafiounika.service.ActionsRequest;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;

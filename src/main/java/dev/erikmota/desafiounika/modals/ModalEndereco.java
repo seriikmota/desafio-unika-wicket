@@ -1,7 +1,7 @@
-package dev.erikmota.desafiounikamain.modals;
+package dev.erikmota.desafiounika.modals;
 
-import dev.erikmota.desafiounikamain.models.*;
-import dev.erikmota.desafiounikamain.service.ActionsRequest;
+import dev.erikmota.desafiounika.models.*;
+import dev.erikmota.desafiounika.service.ActionsRequest;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
