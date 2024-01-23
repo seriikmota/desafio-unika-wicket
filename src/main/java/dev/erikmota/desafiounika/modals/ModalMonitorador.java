@@ -100,12 +100,12 @@ public class ModalMonitorador extends Panel {
 
     }
     private void inicializarLabels(){
-        cnpjLabel = new Label("cnpjLabel", "Cnpj");
+        cnpjLabel = new Label("cnpjLabel", "CNPJ");
         razaoLabel = new Label("razaoLabel", "Razao Social");
         inscricaoLabel = new Label("inscricaoLabel", "Inscricao Estadual");
-        cpfLabel = new Label("cpfLabel", "Cpf");
+        cpfLabel = new Label("cpfLabel", "CPF");
         nomeLabel = new Label("nomeLabel", "Nome");
-        rgLabel = new Label("rgLabel", "Rg");
+        rgLabel = new Label("rgLabel", "RG");
         dataLabel = new Label("dataLabel", "Data de Nascimento/Abertura");
         componentes.addAll(Arrays.asList(cnpjLabel, razaoLabel, inscricaoLabel, cpfLabel, nomeLabel, rgLabel, dataLabel));
     }
